@@ -58,7 +58,7 @@ class Migrator:
             logger.info('Refresh workflow-related information on every object of the database...')
             self.portal.portal_workflow.updateRoleMappings()
 
-    def reinstall(self, profiles=[u'profile-imio.project.pst:default', ]):
+    def reinstall(self, profiles):
         '''Allows to reinstall a series of p_profiles.'''
         logger.info('Reinstalling product(s) %s...' % ', '.join([profile[8:] for profile in profiles]))
         for profile in profiles:
