@@ -2,7 +2,6 @@ Changelog
 =========
 
 
-0.1 (unreleased)
+1.0 (unreleased)
 ----------------
-
-- Initial release.
+- Manage base migrator, reinstall profiles, refresh catalogs/workflow security, log start/end timestamp
