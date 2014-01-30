@@ -19,7 +19,7 @@ long_description = (
 
 setup(
     name='imio.migrator',
-    version='1.1dev',
+    version='1.1',
     description="Migration helper tool",
     long_description=long_description,
     # Get more from http://pypi.python.org/pypi?%3Aaction=list_classifiers

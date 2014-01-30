@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1 (unreleased)
+1.1 (2014-01-30)
 ----------------
 
 - Display the catalog we are currently recataloging as several can be recataloged
