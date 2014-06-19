@@ -58,6 +58,47 @@ class Migrator:
             logger.info('Refresh workflow-related information on every object of the database...')
             self.portal.portal_workflow.updateRoleMappings()
 
+    def cleanRegistries(self, registries=('portal_javascripts', 'portal_css', 'portal_setup')):
+        '''
+          Clean p_registries, remove not found elements.
+        '''
+        logger.info('Cleaning registries...')
+        if 'portal_javascripts' in registries:
+            jstool = self.portal.portal_javascripts
+            for script in jstool.getResources():
+                scriptId = script.getId()
+                resourceExists = script.isExternal or self.portal.restrictedTraverse(scriptId, False) and True
+                if not resourceExists:
+                    # we found a notFound resource, remove it
+                    logger.info('Removing %s from portal_javascripts' % scriptId)
+                    jstool.unregisterResource(scriptId)
+            jstool.cookResources()
+            logger.info('portal_javascripts has been cleaned!')
+
+        if 'portal_css' in registries:
+            csstool = self.portal.portal_css
+            for sheet in csstool.getResources():
+                sheetId = sheet.getId()
+                resourceExists = sheet.isExternal or self.portal.restrictedTraverse(sheetId, False) and True
+                if not resourceExists:
+                    # we found a notFound resource, remove it
+                    logger.info('Removing %s from portal_css' % sheetId)
+                    csstool.unregisterResource(sheetId)
+            csstool.cookResources()
+            logger.info('portal_css has been cleaned!')
+
+        if 'portal_setup' in registries:
+            # clean portal_setup
+            setuptool = self.portal.portal_setup
+            for stepId in setuptool.getSortedImportSteps():
+                stepMetadata = setuptool.getImportStepMetadata(stepId)
+                # remove invalid steps
+                if stepMetadata['invalid']:
+                    logger.info('Removing %s step from portal_setup' % stepId)
+                    setuptool._import_registry.unregisterStep(stepId)
+            logger.info('portal_setup has been cleaned!')
+        logger.info('Registries have been cleaned!')
+
     def reinstall(self, profiles):
         '''Allows to reinstall a series of p_profiles.'''
         logger.info('Reinstalling product(s) %s...' % ', '.join([profile[8:] for profile in profiles]))
