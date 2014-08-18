@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2 (unreleased)
+1.2 (2014-08-18)
 ----------------
 - Added method to clean registries (portal_javascripts, portal_css and portal_setup)
 
