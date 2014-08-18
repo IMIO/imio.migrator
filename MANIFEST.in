@@ -5,3 +5,4 @@ include *.py
 include Makefile
 recursive-include docs *.GPL
 recursive-include docs *.rst
+global-exclude *.pyc
