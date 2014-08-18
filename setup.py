@@ -33,7 +33,7 @@ setup(
     keywords='',
     author='IMIO',
     author_email='dev@imio.be',
-    url='http://pypi.python.org/pypi/imio.migrator',
+    url='http://pypi.imio.be/imio/imio/imio.migrator',
     license='GPL',
     packages=find_packages('src', exclude=['ez_setup']),
     namespace_packages=['imio', ],
