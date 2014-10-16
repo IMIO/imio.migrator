@@ -16,6 +16,7 @@ class Migrator:
     def __init__(self, context):
         self.context = context
         self.portal = context.portal_url.getPortalObject()
+        self.ps = self.portal.portal_setup
         self.startTime = time.time()
 
     def run(self):
@@ -89,13 +90,12 @@ class Migrator:
 
         if 'portal_setup' in registries:
             # clean portal_setup
-            setuptool = self.portal.portal_setup
-            for stepId in setuptool.getSortedImportSteps():
-                stepMetadata = setuptool.getImportStepMetadata(stepId)
+            for stepId in self.ps.getSortedImportSteps():
+                stepMetadata = self.ps.getImportStepMetadata(stepId)
                 # remove invalid steps
                 if stepMetadata['invalid']:
                     logger.info('Removing %s step from portal_setup' % stepId)
-                    setuptool._import_registry.unregisterStep(stepId)
+                    self.ps._import_registry.unregisterStep(stepId)
             logger.info('portal_setup has been cleaned!')
         logger.info('Registries have been cleaned!')
 
@@ -103,8 +103,53 @@ class Migrator:
         '''Allows to reinstall a series of p_profiles.'''
         logger.info('Reinstalling product(s) %s...' % ', '.join([profile[8:] for profile in profiles]))
         for profile in profiles:
+            if not profile.startswith('profile-'):
+                profile = 'profile-%s' % profile
             try:
-                self.portal.portal_setup.runAllImportStepsFromProfile(profile)
+                self.ps.runAllImportStepsFromProfile(profile)
             except KeyError:
                 logger.error('Profile %s not found!' % profile)
         logger.info('Done.')
+
+    def upgradeProfile(self, profile):
+        """ Get upgrade step and run it """
+
+        def run_upgrade_step(step, source, dest, last_flag):
+            logger.info('Running upgrade step %s (%s -> %s): %s' % (profile, source, dest, step.title))
+            step.doStep(self.ps)
+            # we update portal_quickinstaller if the current step is the last one
+            if last_flag:
+                pqi = self.portal.portal_quickinstaller
+                try:
+                    product = profile.split(':')[0]
+                    prod = pqi.get(product)
+                    setattr(prod, 'installedversion', pqi.getProductVersion(product))
+                except IndexError, e:
+                    logger.error("Cannot extract product from profile '%s': %s" % (profile, e))
+                except AttributeError, e:
+                    logger.error("Cannot get product '%s': %s" % (product, e))
+
+        upgrades = self.ps.listUpgrades(profile)
+        last_i = len(upgrades)-1
+        for i, container in enumerate(upgrades):
+            last_flag = False
+            if isinstance(container, dict):
+                if i == last_i:
+                    last_flag = True
+                run_upgrade_step(container['step'], container['ssource'], container['sdest'], last_flag)
+            elif isinstance(container, list):
+                last_j = len(container)-1
+                for j, dic in enumerate(container):
+                    if i == last_i and j == last_j:
+                        last_flag = True
+                    run_upgrade_step(dic['step'], dic['ssource'], dic['sdest'], last_flag)
+
+    def upgradeAll(self, omit=[]):
+        """ Upgrade all upgrade profiles except those in omit parameter list """
+        if self.portal.REQUEST.get('profile_id'):
+            omit.append(self.portal.REQUEST.get('profile_id'))
+        for profile in self.ps.listProfilesWithUpgrades():
+            # make sure the profile isn't the current (or must be avoided) and
+            # the profile is well installed
+            if profile not in omit and self.ps.getLastVersionForProfile(profile) != 'unknown':
+                self.upgradeProfile(profile)
