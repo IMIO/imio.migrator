@@ -4,8 +4,8 @@ Changelog
 1.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Added methods to run upgrade steps for a given profile or all installed profiles (with pqi update).
+  [sgeulette]
 
 1.2 (2014-08-18)
 ----------------
