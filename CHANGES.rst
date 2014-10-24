@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3 (unreleased)
+1.3 (2014-10-24)
 ----------------
 
 - Added methods to run upgrade steps for a given profile or all installed profiles (with pqi update).
