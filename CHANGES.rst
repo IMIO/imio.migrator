@@ -4,8 +4,9 @@ Changelog
 1.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Display the catalog we are currently recataloging as several can be recataloged,
+  like in version 1.1 but this was lost somehow...
+  [gbastien]
 
 1.3 (2014-10-24)
 ----------------
