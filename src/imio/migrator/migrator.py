@@ -39,11 +39,11 @@ class Migrator:
            catalog ids we want to 'clear and rebuild' using
            p_catalogsToRebuild.'''
         if catalogs:
-            logger.info('Recataloging...')
             # Manage the catalogs we want to clear and rebuild
             # We have to call another method as clear=1 passed to refreshCatalog
             #does not seem to work as expected...
             for catalog in catalogsToRebuild:
+                logger.info('Recataloging %s...' % catalog)
                 catalogObj = getattr(self.portal, catalog)
                 if base_hasattr(catalogObj, 'clearFindAndRebuild'):
                     catalogObj.clearFindAndRebuild()
