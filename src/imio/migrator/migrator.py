@@ -123,7 +123,9 @@ class Migrator:
                 try:
                     product = profile.split(':')[0]
                     prod = pqi.get(product)
-                    setattr(prod, 'installedversion', pqi.getProductVersion(product))
+                    if prod:
+                        setattr(prod, 'installedversion', pqi.getProductVersion(product))
+                    self.ps.setLastVersionForProfile(profile, dest)
                 except IndexError, e:
                     logger.error("Cannot extract product from profile '%s': %s" % (profile, e))
                 except AttributeError, e:
