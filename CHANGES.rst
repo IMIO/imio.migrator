@@ -7,6 +7,9 @@ Changelog
 - Display the catalog we are currently recataloging as several can be recataloged,
   like in version 1.1 but this was lost somehow...
   [gbastien]
+- After an upgrade step has been executed, set manually new installed profile version
+  or despite upgrade step has been executed, it is still considered not
+  [gbastien]
 
 1.3 (2014-10-24)
 ----------------
