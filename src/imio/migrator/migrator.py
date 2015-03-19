@@ -21,7 +21,7 @@ class Migrator:
 
     def run(self):
         '''Must be overridden. This method does the migration job.'''
-        raise 'You should have overridden me darling.'''
+        raise 'You should have overridden me darling.'
 
     def finish(self):
         '''At the end of the migration, you can call this method to log its
