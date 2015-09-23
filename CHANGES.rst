@@ -4,7 +4,8 @@ Changelog
 1.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Added method to run given steps of a profile.
+  [sgeulette]
 
 
 1.4 (2015-01-15)
