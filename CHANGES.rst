@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.6 (unreleased)
+1.6 (2016-12-07)
 ----------------
 
 - Added method `warn` that manages warning messages, it will display the warning
