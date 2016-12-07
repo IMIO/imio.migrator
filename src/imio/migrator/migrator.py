@@ -18,15 +18,25 @@ class Migrator:
         self.portal = context.portal_url.getPortalObject()
         self.ps = self.portal.portal_setup
         self.startTime = time.time()
+        self.warnings = []
 
     def run(self):
         '''Must be overridden. This method does the migration job.'''
         raise 'You should have overridden me darling.'
 
+    def warn(self, logger, warning_msg):
+        '''Manage warning messages, into logger and saved into self.warnings.'''
+        logger.warn(warning_msg)
+        self.warnings.append(warning_msg)
+
     def finish(self):
         '''At the end of the migration, you can call this method to log its
            duration in minutes.'''
         seconds = time.time() - self.startTime
+        if self.warnings:
+            logger.info('Here are warning messages generated during the migration : \n{0}'.format(
+                '\n'.join(self.warnings))
+            )
         logger.info('Migration finished in %d minute(s).' % (seconds/60))
 
     def refreshDatabase(self,
@@ -99,14 +109,16 @@ class Migrator:
             logger.info('portal_setup has been cleaned!')
         logger.info('Registries have been cleaned!')
 
-    def reinstall(self, profiles):
+    def reinstall(self, profiles, ignore_dependencies=False, dependency_strategy=None):
         '''Allows to reinstall a series of p_profiles.'''
         logger.info('Reinstalling product(s) %s...' % ', '.join([profile[8:] for profile in profiles]))
         for profile in profiles:
             if not profile.startswith('profile-'):
                 profile = 'profile-%s' % profile
             try:
-                self.ps.runAllImportStepsFromProfile(profile)
+                self.ps.runAllImportStepsFromProfile(profile,
+                                                     ignore_dependencies=ignore_dependencies,
+                                                     dependency_strategy=dependency_strategy)
             except KeyError:
                 logger.error('Profile %s not found!' % profile)
         logger.info('Done.')
@@ -159,5 +171,4 @@ class Migrator:
         """ Run given steps of a product profile (default is 'default' profile) """
         for step_id in steps:
             logger.info("Running profile step '%s:%s' => %s" % (product, profile, step_id))
-            self.portal.portal_setup.runImportStepFromProfile('profile-%s:%s' % (product, profile), step_id)
-
+            self.ps.runImportStepFromProfile('profile-%s:%s' % (product, profile), step_id)

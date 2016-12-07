@@ -4,8 +4,14 @@ Changelog
 1.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Added method `warn` that manages warning messages, it will display the warning
+  like before in the Zope log but will also store it so every warnings are
+  displayed togheter at the end of the migration.
+  [gbastien]
+- Method `reinstall` may now receive paremeters `ignore_dependencies` and
+  `dependency_strategy` to use it when calling `portal_setup.runAllImportStepsFromProfile`.
+  This is only useable with Products.GenericSetup >= 1.8.0 (Plone >= 4.3.8). 
+  [gbastien]
 
 1.5 (2015-11-24)
 ----------------
