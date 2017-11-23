@@ -2,13 +2,14 @@
 # ------------------------------------------------------------------------------
 # GNU General Public License (GPL)
 # ------------------------------------------------------------------------------
-'''This module, borrowed from Products.PloneMeeting, defines helper methods to ease
-   migration process.'''
+'''This module, borrowed from Products.PloneMeeting, defines helper methods
+   to ease migration process.'''
 # ------------------------------------------------------------------------------
 import logging
-logger = logging.getLogger('imio.migrator')
 import time
 from Products.CMFPlone.utils import base_hasattr
+
+logger = logging.getLogger('imio.migrator')
 
 
 class Migrator:
@@ -51,7 +52,7 @@ class Migrator:
         if catalogs:
             # Manage the catalogs we want to clear and rebuild
             # We have to call another method as clear=1 passed to refreshCatalog
-            #does not seem to work as expected...
+            # does not seem to work as expected...
             for catalog in catalogsToRebuild:
                 logger.info('Recataloging %s...' % catalog)
                 catalogObj = getattr(self.portal, catalog)
@@ -62,7 +63,7 @@ class Migrator:
                     catalogObj.manage_rebuildCatalog()
             catalogIds = ('portal_catalog', 'reference_catalog', 'uid_catalog')
             for catalogId in catalogIds:
-                if not catalogId in catalogsToRebuild:
+                if catalogId not in catalogsToRebuild:
                     catalogObj = getattr(self.portal, catalogId)
                     catalogObj.refreshCatalog(clear=0)
         if workflows:
