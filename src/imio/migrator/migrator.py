@@ -112,7 +112,8 @@ class Migrator:
 
     def reinstall(self, profiles, ignore_dependencies=False, dependency_strategy=None):
         '''Allows to reinstall a series of p_profiles.'''
-        logger.info('Reinstalling product(s) %s...' % ', '.join([profile[8:] for profile in profiles]))
+        logger.info('Reinstalling product(s) %s...' % ', '.join([profile.startswith('profile-') and profile[8:] or
+                                                                 profile for profile in profiles]))
         for profile in profiles:
             if not profile.startswith('profile-'):
                 profile = 'profile-%s' % profile

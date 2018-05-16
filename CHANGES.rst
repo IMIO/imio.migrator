@@ -4,8 +4,8 @@ Changelog
 1.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Improved reinstall method.
+  [sgeulette]
 
 1.6 (2016-12-07)
 ----------------
@@ -16,7 +16,7 @@ Changelog
   [gbastien]
 - Method `reinstall` may now receive paremeters `ignore_dependencies` and
   `dependency_strategy` to use it when calling `portal_setup.runAllImportStepsFromProfile`.
-  This is only useable with Products.GenericSetup >= 1.8.0 (Plone >= 4.3.8). 
+  This is only useable with Products.GenericSetup >= 1.8.0 (Plone >= 4.3.8).
   [gbastien]
 
 1.5 (2015-11-24)
