@@ -131,6 +131,7 @@ class Migrator:
         def run_upgrade_step(step, source, dest, last_flag):
             logger.info('Running upgrade step %s (%s -> %s): %s' % (profile, source, dest, step.title))
             step.doStep(self.ps)
+            self.ps.setLastVersionForProfile(profile, dest)
             # we update portal_quickinstaller if the current step is the last one
             if last_flag:
                 pqi = self.portal.portal_quickinstaller
@@ -138,7 +139,6 @@ class Migrator:
                     product = profile.split(':')[0]
                     prod = pqi.get(product)
                     setattr(prod, 'installedversion', pqi.getProductVersion(product))
-                    self.ps.setLastVersionForProfile(profile, dest)
                 except IndexError, e:
                     logger.error("Cannot extract product from profile '%s': %s" % (profile, e))
                 except AttributeError, e:

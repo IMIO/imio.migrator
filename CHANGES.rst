@@ -6,6 +6,8 @@ Changelog
 
 - Improved reinstall method.
   [sgeulette]
+- Improved upgrade step to set directly rigth version.
+  [sgeulette]
 
 1.6 (2016-12-07)
 ----------------
