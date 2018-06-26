@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.7 (unreleased)
+1.7 (2018-06-26)
 ----------------
 
 - Improved reinstall method.
