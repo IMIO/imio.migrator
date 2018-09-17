@@ -17,6 +17,7 @@ class Migrator:
     def __init__(self, context):
         self.context = context
         self.portal = context.portal_url.getPortalObject()
+        self.request = self.portal.REQUEST
         self.ps = self.portal.portal_setup
         self.startTime = time.time()
         self.warnings = []
