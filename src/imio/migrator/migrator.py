@@ -4,10 +4,14 @@
 # ------------------------------------------------------------------------------
 '''This module, borrowed from Products.PloneMeeting, defines helper methods
    to ease migration process.'''
-# ------------------------------------------------------------------------------
+
+from imio.helpers.catalog import removeColumns
+from imio.helpers.catalog import removeIndexes
+from Products.CMFPlone.utils import base_hasattr
+
 import logging
 import time
-from Products.CMFPlone.utils import base_hasattr
+
 
 logger = logging.getLogger('imio.migrator')
 
@@ -111,8 +115,20 @@ class Migrator:
             logger.info('portal_setup has been cleaned!')
         logger.info('Registries have been cleaned!')
 
+    def removeUnusedIndexes(self, indexes=[]):
+        """ Remove unused catalog indexes. """
+        logger.info('Removing no more used catalog indexes...')
+        removeIndexes(self.portal, indexes=indexes)
+        logger.info('Done.')
+
+    def removeUnusedColumns(self, columns=[]):
+        """ Remove unused catalog columns. """
+        logger.info('Removing no more used catalog columns...')
+        removeColumns(self.portal, columns=columns)
+        logger.info('Done.')
+
     def reinstall(self, profiles, ignore_dependencies=False, dependency_strategy=None):
-        '''Allows to reinstall a series of p_profiles.'''
+        """ Allows to reinstall a series of p_profiles. """
         logger.info('Reinstalling product(s) %s...' % ', '.join([profile.startswith('profile-') and profile[8:] or
                                                                  profile for profile in profiles]))
         for profile in profiles:

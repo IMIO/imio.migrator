@@ -6,6 +6,9 @@ Changelog
 
 - Make REQUEST available thru self.request.
   [gbastien]
+- Added methods `removeUnusedColumns` and `removeUnusedIndexes` to easily remove
+  columns or indexes from portal_catalog.
+  [gbastien]
 
 1.7 (2018-06-26)
 ----------------
