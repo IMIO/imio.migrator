@@ -142,8 +142,8 @@ class Migrator:
                 logger.error('Profile %s not found!' % profile)
         logger.info('Done.')
 
-    def upgradeProfile(self, profile):
-        """ Get upgrade step and run it """
+    def upgradeProfile(self, profile, olds=[]):
+        """ Get upgrade steps and run it. olds can contain a list of dest upgrades to run. """
 
         def run_upgrade_step(step, source, dest, last_flag):
             logger.info('Running upgrade step %s (%s -> %s): %s' % (profile, source, dest, step.title))
@@ -161,20 +161,22 @@ class Migrator:
                 except AttributeError, e:
                     logger.error("Cannot get product '%s' from portal_quickinstaller: %s" % (product, e))
 
-        upgrades = self.ps.listUpgrades(profile)
+        upgrades = self.ps.listUpgrades(profile, show_old=bool(olds))
         last_i = len(upgrades)-1
         for i, container in enumerate(upgrades):
             last_flag = False
             if isinstance(container, dict):
                 if i == last_i:
                     last_flag = True
-                run_upgrade_step(container['step'], container['ssource'], container['sdest'], last_flag)
+                if not olds or container['sdest'] in olds:
+                    run_upgrade_step(container['step'], container['ssource'], container['sdest'], last_flag)
             elif isinstance(container, list):
                 last_j = len(container)-1
                 for j, dic in enumerate(container):
                     if i == last_i and j == last_j:
                         last_flag = True
-                    run_upgrade_step(dic['step'], dic['ssource'], dic['sdest'], last_flag)
+                    if not olds or dic['sdest'] in olds:
+                        run_upgrade_step(dic['step'], dic['ssource'], dic['sdest'], last_flag)
 
     def upgradeAll(self, omit=[]):
         """ Upgrade all upgrade profiles except those in omit parameter list """
