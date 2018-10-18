@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.8 (unreleased)
+1.8 (2018-10-18)
 ----------------
 
 - Make REQUEST available thru self.request.
