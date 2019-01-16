@@ -8,6 +8,7 @@
 from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
 from Products.CMFPlone.utils import base_hasattr
+from Products.GenericSetup.upgrade import normalize_version
 
 import logging
 import time
@@ -145,12 +146,30 @@ class Migrator:
     def upgradeProfile(self, profile, olds=[]):
         """ Get upgrade steps and run it. olds can contain a list of dest upgrades to run. """
 
-        def run_upgrade_step(step, source, dest, last_flag):
+        def run_upgrade_step(step, source, dest):
             logger.info('Running upgrade step %s (%s -> %s): %s' % (profile, source, dest, step.title))
             step.doStep(self.ps)
-            self.ps.setLastVersionForProfile(profile, dest)
-            # we update portal_quickinstaller if the current step is the last one
-            if last_flag:
+
+        # if olds, we get all steps.
+        upgrades = self.ps.listUpgrades(profile, show_old=bool(olds))
+        applied_dests = []
+        for container in upgrades:
+            if isinstance(container, dict):
+                if not olds or container['sdest'] in olds:
+                    applied_dests.append((normalize_version(container['sdest']), container['sdest']))
+                    run_upgrade_step(container['step'], container['ssource'], container['sdest'])
+            elif isinstance(container, list):
+                for dic in container:
+                    if not olds or dic['sdest'] in olds:
+                        applied_dests.append((normalize_version(dic['sdest']), dic['sdest']))
+                        run_upgrade_step(dic['step'], dic['ssource'], dic['sdest'])
+        if applied_dests:
+            current_version = normalize_version(self.ps.getLastVersionForProfile(profile))
+            highest_version, dest = sorted(applied_dests)[-1]
+            # check if highest applied version is higher than current version
+            if highest_version > current_version:
+                self.ps.setLastVersionForProfile(profile, dest)
+                # we update portal_quickinstaller version
                 pqi = self.portal.portal_quickinstaller
                 try:
                     product = profile.split(':')[0]
@@ -160,23 +179,6 @@ class Migrator:
                     logger.error("Cannot extract product from profile '%s': %s" % (profile, e))
                 except AttributeError, e:
                     logger.error("Cannot get product '%s' from portal_quickinstaller: %s" % (product, e))
-
-        upgrades = self.ps.listUpgrades(profile, show_old=bool(olds))
-        last_i = len(upgrades)-1
-        for i, container in enumerate(upgrades):
-            last_flag = False
-            if isinstance(container, dict):
-                if i == last_i:
-                    last_flag = True
-                if not olds or container['sdest'] in olds:
-                    run_upgrade_step(container['step'], container['ssource'], container['sdest'], last_flag)
-            elif isinstance(container, list):
-                last_j = len(container)-1
-                for j, dic in enumerate(container):
-                    if i == last_i and j == last_j:
-                        last_flag = True
-                    if not olds or dic['sdest'] in olds:
-                        run_upgrade_step(dic['step'], dic['ssource'], dic['sdest'], last_flag)
 
     def upgradeAll(self, omit=[]):
         """ Upgrade all upgrade profiles except those in omit parameter list """
