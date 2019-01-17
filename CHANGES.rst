@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.9 (unreleased)
+1.9 (2019-01-17)
 ----------------
 
 - Improved and simplified upgradeProfile method
