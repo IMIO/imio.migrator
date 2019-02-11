@@ -4,8 +4,9 @@ Changelog
 1.10 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added a ZLogHandler when updating catalog so some logging showing progression
+  is shown in the Zope log.
+  [gbastien]
 
 1.9 (2019-01-17)
 ----------------

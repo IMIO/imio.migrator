@@ -9,6 +9,7 @@ from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
 from Products.CMFPlone.utils import base_hasattr
 from Products.GenericSetup.upgrade import normalize_version
+from Products.ZCatalog.ProgressHandler import ZLogHandler
 
 import logging
 import time
@@ -71,7 +72,8 @@ class Migrator:
             for catalogId in catalogIds:
                 if catalogId not in catalogsToRebuild:
                     catalogObj = getattr(self.portal, catalogId)
-                    catalogObj.refreshCatalog(clear=0)
+                    pghandler = ZLogHandler()
+                    catalogObj.refreshCatalog(clear=0, pghandler=pghandler)
         if workflows:
             logger.info('Refresh workflow-related information on every object of the database...')
             self.portal.portal_workflow.updateRoleMappings()
