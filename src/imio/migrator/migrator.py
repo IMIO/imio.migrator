@@ -7,15 +7,19 @@
 
 from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
+from plone import api
+from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.utils import base_hasattr
 from Products.GenericSetup.upgrade import normalize_version
 from Products.ZCatalog.ProgressHandler import ZLogHandler
+from zope.component import getUtility
 
 import logging
 import time
 
 
 logger = logging.getLogger('imio.migrator')
+CURRENTLY_MIGRATING_REQ_VALUE = 'imio_migrator_currently_migrating'
 
 
 class Migrator:
@@ -25,8 +29,11 @@ class Migrator:
         self.portal = context.portal_url.getPortalObject()
         self.request = self.portal.REQUEST
         self.ps = self.portal.portal_setup
+        self.registry = getUtility(IRegistry)
+        self.catalog = api.portal.get_tool('portal_catalog')
         self.startTime = time.time()
         self.warnings = []
+        self.request.set(CURRENTLY_MIGRATING_REQ_VALUE, True)
 
     def run(self):
         '''Must be overridden. This method does the migration job.'''
@@ -40,6 +47,7 @@ class Migrator:
     def finish(self):
         '''At the end of the migration, you can call this method to log its
            duration in minutes.'''
+        self.request.set(CURRENTLY_MIGRATING_REQ_VALUE, False)
         seconds = time.time() - self.startTime
         if self.warnings:
             logger.info('Here are warning messages generated during the migration : \n{0}'.format(

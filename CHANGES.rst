@@ -7,6 +7,13 @@ Changelog
 - Added a ZLogHandler when updating catalog so some logging showing progression
   is shown in the Zope log.
   [gbastien]
+- Set a value in the REQUEST `imio_migrator_currently_migrating` during
+  migration so it can be used by other code to know that we are in a migration
+  process.
+  [gbastien]
+- Define `self.catalog` and `self.registry` on base Migrator class so it is
+  available for subclasses.
+  [gbastien]
 
 1.9 (2019-01-17)
 ----------------
