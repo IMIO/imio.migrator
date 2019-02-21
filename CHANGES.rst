@@ -14,6 +14,10 @@ Changelog
 - Define `self.catalog` and `self.registry` on base Migrator class so it is
   available for subclasses.
   [gbastien]
+- Added method `Migrator.removeUnusedPortalTypes` that will remove
+  `portal_types` passed as parameter from tools `portal_types` and
+  `portal_factory`.
+  [gbastien]
 
 1.9 (2019-01-17)
 ----------------

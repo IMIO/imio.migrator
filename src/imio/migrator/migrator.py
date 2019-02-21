@@ -138,6 +138,21 @@ class Migrator:
         removeColumns(self.portal, columns=columns)
         logger.info('Done.')
 
+    def removeUnusedPortalTypes(self, portal_types=[]):
+        """ Remove unused portal_types from portal_types and portal_factory."""
+        logger.info('Removing no more used {0} portal_types...'.format(', '.join(portal_types)))
+        # remove from portal_types
+        types = self.portal.portal_types
+        to_remove = [portal_type for portal_type in portal_types if portal_type in types]
+        if to_remove:
+            types.manage_delObjects(ids=to_remove)
+        # remove from portal_factory
+        portal_factory = api.portal.get_tool('portal_factory')
+        registeredFactoryTypes = [portal_type for portal_type in portal_factory.getFactoryTypes().keys()
+                                  if portal_type not in portal_types]
+        portal_factory.manage_setPortalFactoryTypes(listOfTypeIds=registeredFactoryTypes)
+        logger.info('Done.')
+
     def reinstall(self, profiles, ignore_dependencies=False, dependency_strategy=None):
         """ Allows to reinstall a series of p_profiles. """
         logger.info('Reinstalling product(s) %s...' % ', '.join([profile.startswith('profile-') and profile[8:] or
