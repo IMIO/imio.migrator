@@ -18,6 +18,8 @@ Changelog
   `portal_types` passed as parameter from tools `portal_types` and
   `portal_factory`.
   [gbastien]
+- Requires `imio.helpers`.
+  [gbastien]
 
 1.9 (2019-01-17)
 ----------------
