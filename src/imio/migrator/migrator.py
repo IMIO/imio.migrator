@@ -5,7 +5,6 @@
 '''This module, borrowed from Products.PloneMeeting, defines helper methods
    to ease migration process.'''
 
-import ipdb; ipdb.set_trace()
 from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
 from plone import api
