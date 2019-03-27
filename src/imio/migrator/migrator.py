@@ -5,7 +5,6 @@
 '''This module, borrowed from Products.PloneMeeting, defines helper methods
    to ease migration process.'''
 
-import ipdb; ipdb.set_trace()
 from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
 from plone import api
@@ -25,7 +24,7 @@ CURRENTLY_MIGRATING_REQ_VALUE = 'imio_migrator_currently_migrating'
 
 class Migrator:
     '''Abstract class for creating a migrator.'''
-    def __init__(self, context):
+    def __init__(self, context, disable_linkintegrity_checks=False):
         self.context = context
         self.portal = context.portal_url.getPortalObject()
         self.request = self.portal.REQUEST
@@ -35,6 +34,24 @@ class Migrator:
         self.startTime = time.time()
         self.warnings = []
         self.request.set(CURRENTLY_MIGRATING_REQ_VALUE, True)
+        self.disable_linkintegrity_checks = disable_linkintegrity_checks
+        if disable_linkintegrity_checks:
+            self._disable_link_integrity_checks()
+
+    def _disable_link_integrity_checks(self):
+        """ """
+        # save original value
+        self.original_enable_link_integrity_checks = \
+            bool(self.portal.portal_properties.site_properties.enable_link_integrity_checks)
+        # disable enable_link_integrity_checks
+        self.portal.portal_properties.site_properties.manage_changeProperties(
+            enable_link_integrity_checks=False)
+
+    def _restore_link_integrity_checks(self):
+        """ """
+        # set back original value in enable_link_integrity_checks
+        self.portal.portal_properties.site_properties.manage_changeProperties(
+            enable_link_integrity_checks=self.original_enable_link_integrity_checks)
 
     def run(self):
         '''Must be overridden. This method does the migration job.'''
@@ -48,13 +65,15 @@ class Migrator:
     def finish(self):
         '''At the end of the migration, you can call this method to log its
            duration in minutes.'''
+        if self.disable_linkintegrity_checks:
+            self._restore_link_integrity_checks()
         self.request.set(CURRENTLY_MIGRATING_REQ_VALUE, False)
         seconds = time.time() - self.startTime
         if self.warnings:
             logger.info('Here are warning messages generated during the migration : \n{0}'.format(
                 '\n'.join(self.warnings))
             )
-        logger.info('Migration finished in %d minute(s).' % (seconds/60))
+        logger.info('Migration finished in %d minute(s).' % (seconds / 60))
 
     def refreshDatabase(self,
                         catalogs=True,

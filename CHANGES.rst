@@ -20,6 +20,9 @@ Changelog
   [gbastien]
 - Requires `imio.helpers`.
   [gbastien]
+- Added parameter `disable_linkintegrity_checks=False` to `Migrator.__init__`
+  so it is easier to disable linkintegrity checks during a migration.
+  [gbastien]
 
 1.9 (2019-01-17)
 ----------------
