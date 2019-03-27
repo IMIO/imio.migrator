@@ -8,14 +8,14 @@
 from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
 from plone import api
+from plone.app.controlpanel.editing import IEditingSchema
 from plone.registry.interfaces import IRegistry
+from Products.CMFCore.interfaces import IPropertiesTool
 from Products.CMFPlone.utils import base_hasattr
 from Products.GenericSetup.upgrade import normalize_version
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from zope.component import getUtility
 from zope.component import queryUtility
-from Products.CMFCore.interfaces import IPropertiesTool
-from plone.app.controlpanel.editing import IEditingSchema
 
 import logging
 import time
