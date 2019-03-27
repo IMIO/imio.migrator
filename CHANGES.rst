@@ -22,6 +22,7 @@ Changelog
   [gbastien]
 - Added parameter `disable_linkintegrity_checks=False` to `Migrator.__init__`
   so it is easier to disable linkintegrity checks during a migration.
+  Supposed to work with Plone4 and Plone5...
   [gbastien]
 
 1.9 (2019-01-17)
