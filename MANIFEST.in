@@ -1,8 +1,9 @@
 graft src/imio
-graft docs/
+graft docs
 include *.cfg *.rst *.in
 include *.py
 include Makefile
+include requirements.txt
 recursive-include docs *.GPL
 recursive-include docs *.rst
 global-exclude *.pyc

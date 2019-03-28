@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.10 (unreleased)
+1.10 (2019-03-28)
 -----------------
 
 - Added a ZLogHandler when updating catalog so some logging showing progression
