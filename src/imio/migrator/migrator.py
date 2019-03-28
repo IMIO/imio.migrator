@@ -193,6 +193,13 @@ class Migrator:
         portal_factory.manage_setPortalFactoryTypes(listOfTypeIds=registeredFactoryTypes)
         logger.info('Done.')
 
+    def install(self, products):
+        """ Allows to install a series of products """
+        qi = api.portal.get_tool('portal_quickinstaller')
+        for product in products:
+            logger.info("Install product '{}'".format(product))
+            logger.info(qi.installProduct(product, forceProfile=True))  # don't reinstall
+
     def reinstall(self, profiles, ignore_dependencies=False, dependency_strategy=None):
         """ Allows to reinstall a series of p_profiles. """
         logger.info('Reinstalling product(s) %s...' % ', '.join([profile.startswith('profile-') and profile[8:] or

@@ -24,6 +24,8 @@ Changelog
   so it is easier to disable linkintegrity checks during a migration.
   Supposed to work with Plone4 and Plone5...
   [gbastien]
+- Added install method
+  [sgeulette]
 
 1.9 (2019-01-17)
 ----------------
