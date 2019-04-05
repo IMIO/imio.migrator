@@ -98,7 +98,8 @@ class Migrator:
     def refreshDatabase(self,
                         catalogs=True,
                         catalogsToRebuild=['portal_catalog'],
-                        workflows=False):
+                        workflows=False,
+                        workflowsToUpdate=[]):
         '''After the migration script has been executed, it can be necessary to
            update the Plone catalogs and/or the workflow settings on every
            database object if workflow definitions have changed. We can pass
@@ -124,7 +125,15 @@ class Migrator:
                     catalogObj.refreshCatalog(clear=0, pghandler=pghandler)
         if workflows:
             logger.info('Refresh workflow-related information on every object of the database...')
-            self.portal.portal_workflow.updateRoleMappings()
+            wfTool = self.portal.portal_workflow
+            if not workflowsToUpdate:
+                count = wfTool.updateRoleMappings()
+            wfs = {}
+            for wf_id in workflowsToUpdate:
+                wf = wfTool.getWorkflowById(wf_id)
+                wfs[wf] = wf
+            count = wfTool._recursiveUpdateRoleMappings(self.portal, wfs)
+            logger.info('{0} object(s) updated.'.format(count))
 
     def cleanRegistries(self, registries=('portal_javascripts', 'portal_css', 'portal_setup')):
         '''

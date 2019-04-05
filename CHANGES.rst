@@ -4,8 +4,10 @@ Changelog
 1.11 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added parameter `workflowsToUpdate=[]` to `refreshDatabase` method so when
+  parameter `workflows=True`, we may define which workflows to update.
+  If nothing defined, every workflows are updated.
+  [gbastien]
 
 1.10 (2019-03-28)
 -----------------
