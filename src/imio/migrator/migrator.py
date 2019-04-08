@@ -7,15 +7,14 @@
 
 from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
+from imio.helpers.content import disable_link_integrity_checks
+from imio.helpers.content import restore_link_integrity_checks
 from plone import api
-from plone.app.controlpanel.editing import IEditingSchema
 from plone.registry.interfaces import IRegistry
-from Products.CMFCore.interfaces import IPropertiesTool
 from Products.CMFPlone.utils import base_hasattr
 from Products.GenericSetup.upgrade import normalize_version
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from zope.component import getUtility
-from zope.component import queryUtility
 
 import logging
 import time
@@ -39,39 +38,7 @@ class Migrator:
         self.request.set(CURRENTLY_MIGRATING_REQ_VALUE, True)
         self.disable_linkintegrity_checks = disable_linkintegrity_checks
         if disable_linkintegrity_checks:
-            self._disable_link_integrity_checks()
-
-    def _disable_link_integrity_checks(self):
-        """ """
-        ptool = queryUtility(IPropertiesTool)
-        site_props = getattr(ptool, 'site_properties', None)
-        self.link_integrity_in_props = False
-        if site_props and site_props.hasProperty(
-                'enable_link_integrity_checks'):
-            self.link_integrity_in_props = True
-            self.original_link_integrity = site_props.getProperty(
-                'enable_link_integrity_checks', False)
-            site_props.manage_changeProperties(
-                enable_link_integrity_checks=False)
-        else:
-            # Plone 5
-            registry = getUtility(IRegistry)
-            editing_settings = registry.forInterface(IEditingSchema, prefix='plone')
-            self.original_link_integrity = editing_settings.enable_link_integrity_checks
-            editing_settings.enable_link_integrity_checks = False
-
-    def _restore_link_integrity_checks(self):
-        """ """
-        if self.link_integrity_in_props:
-            ptool = queryUtility(IPropertiesTool)
-            site_props = getattr(ptool, 'site_properties', None)
-            site_props.manage_changeProperties(
-                enable_link_integrity_checks=self.original_link_integrity
-            )
-        else:
-            registry = getUtility(IRegistry)
-            editing_settings = registry.forInterface(IEditingSchema, prefix='plone')
-            editing_settings.enable_link_integrity_checks = self.original_link_integrity
+            self.original_link_integrity = disable_link_integrity_checks()
 
     def run(self):
         '''Must be overridden. This method does the migration job.'''
@@ -86,7 +53,7 @@ class Migrator:
         '''At the end of the migration, you can call this method to log its
            duration in minutes.'''
         if self.disable_linkintegrity_checks:
-            self._restore_link_integrity_checks()
+            restore_link_integrity_checks(self.original_link_integrity)
         self.request.set(CURRENTLY_MIGRATING_REQ_VALUE, False)
         seconds = time.time() - self.startTime
         if self.warnings:

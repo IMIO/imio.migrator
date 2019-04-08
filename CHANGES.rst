@@ -8,6 +8,9 @@ Changelog
   parameter `workflows=True`, we may define which workflows to update.
   If nothing defined, every workflows are updated.
   [gbastien]
+- Moved methods that disable/restore `enable_link_integrity_checks`
+  to `imio.helpers.content`.
+  [gbastien]
 
 1.10 (2019-03-28)
 -----------------
