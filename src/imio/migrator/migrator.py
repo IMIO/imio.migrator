@@ -31,6 +31,7 @@ class Migrator:
         self.portal = context.portal_url.getPortalObject()
         self.request = self.portal.REQUEST
         self.ps = self.portal.portal_setup
+        self.wfTool = self.portal.portal_workflow
         self.registry = getUtility(IRegistry)
         self.catalog = api.portal.get_tool('portal_catalog')
         self.startTime = time.time()

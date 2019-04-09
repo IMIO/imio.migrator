@@ -11,6 +11,8 @@ Changelog
 - Moved methods that disable/restore `enable_link_integrity_checks`
   to `imio.helpers.content`.
   [gbastien]
+- Make `portal_workflow` available using `self.wfTool`.
+  [gbastien]
 
 1.10 (2019-03-28)
 -----------------
