@@ -93,14 +93,13 @@ class Migrator:
                     catalogObj.refreshCatalog(clear=0, pghandler=pghandler)
         if workflows:
             logger.info('Refresh workflow-related information on every object of the database...')
-            wfTool = self.portal.portal_workflow
             if not workflowsToUpdate:
-                count = wfTool.updateRoleMappings()
+                count = self.wfTool.updateRoleMappings()
             wfs = {}
             for wf_id in workflowsToUpdate:
-                wf = wfTool.getWorkflowById(wf_id)
+                wf = self.wfTool.getWorkflowById(wf_id)
                 wfs[wf] = wf
-            count = wfTool._recursiveUpdateRoleMappings(self.portal, wfs)
+            count = self.wfTool._recursiveUpdateRoleMappings(self.portal, wfs)
             logger.info('{0} object(s) updated.'.format(count))
 
     def cleanRegistries(self, registries=('portal_javascripts', 'portal_css', 'portal_setup')):
