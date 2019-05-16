@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.11 (unreleased)
+1.11 (2019-05-16)
 -----------------
 
 - Added parameter `workflowsToUpdate=[]` to `refreshDatabase` method so when
