@@ -24,7 +24,7 @@ logger = logging.getLogger('imio.migrator')
 CURRENTLY_MIGRATING_REQ_VALUE = 'imio_migrator_currently_migrating'
 
 
-class Migrator:
+class Migrator(object):
     '''Abstract class for creating a migrator.'''
     def __init__(self, context, disable_linkintegrity_checks=False):
         self.context = context
