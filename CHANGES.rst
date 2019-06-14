@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.12 (unreleased)
+1.12 (2019-06-14)
 -----------------
 
 - Migrator class is no more an old-style class (it inherits from object now).
