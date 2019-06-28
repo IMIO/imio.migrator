@@ -4,8 +4,9 @@ Changelog
 1.13 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Be more preceise regarding duration of migration
+  (display in seconds and hours/minutes).
+  [gbastien]
 
 1.12 (2019-06-14)
 -----------------
