@@ -61,8 +61,8 @@ class Migrator(object):
             logger.info('Here are warning messages generated during the migration : \n{0}'.format(
                 '\n'.join(self.warnings))
             )
-        logger.info('Migration finished in %d seconds (%d hours and %d minute(s)).' % (
-            seconds, seconds / 3600, seconds / 60))
+        logger.info('Migration finished in %d seconds (%d hour(s) and %d minute(s)).' % (
+            seconds, seconds / 3600, round(float(seconds) / 60.0)))
 
     def refreshDatabase(self,
                         catalogs=True,
