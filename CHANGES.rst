@@ -4,8 +4,9 @@ Changelog
 1.14 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Use same format when displaying duration of migration, duration is displayed
+  in days/hours/minutes/seconds in any cases.
+  [gbastien]
 
 1.13 (2019-06-28)
 -----------------

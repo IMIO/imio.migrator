@@ -56,13 +56,17 @@ class Migrator(object):
         if self.disable_linkintegrity_checks:
             restore_link_integrity_checks(self.original_link_integrity)
         self.request.set(CURRENTLY_MIGRATING_REQ_VALUE, False)
-        seconds = time.time() - self.startTime
         if self.warnings:
             logger.info('Here are warning messages generated during the migration : \n{0}'.format(
                 '\n'.join(self.warnings))
             )
-        logger.info('Migration finished in %d seconds (%d hour(s) and %d minute(s)).' % (
-            seconds, seconds / 3600, round(float(seconds) / 60.0)))
+        seconds = time.time() - self.startTime
+        seconds = int(seconds)
+        m, s = divmod(seconds, 60)
+        h, m = divmod(m, 60)
+        d, h = divmod(h, 24)
+        logger.info('Migration finished in {0} day(s), {1} hour(s), '
+                    '{2} minute(s), {3} second(s).'.format(d, h, m, s))
 
     def refreshDatabase(self,
                         catalogs=True,
