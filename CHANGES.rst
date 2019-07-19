@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.14 (unreleased)
+1.14 (2019-07-19)
 -----------------
 
 - Use same format when displaying duration of migration, duration is displayed
