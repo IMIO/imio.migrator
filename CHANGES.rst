@@ -4,8 +4,8 @@ Changelog
 1.15 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Highlight log message about warning messages encountered durung migration.
+  [gbastien]
 
 1.14 (2019-07-19)
 -----------------

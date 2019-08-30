@@ -57,7 +57,7 @@ class Migrator(object):
             restore_link_integrity_checks(self.original_link_integrity)
         self.request.set(CURRENTLY_MIGRATING_REQ_VALUE, False)
         if self.warnings:
-            logger.info('Here are warning messages generated during the migration : \n{0}'.format(
+            logger.info('HERE ARE WARNING MESSAGES GENERATED DURING THE MIGRATION : \n{0}'.format(
                 '\n'.join(self.warnings))
             )
         seconds = time.time() - self.startTime
