@@ -6,6 +6,11 @@ Changelog
 
 - Highlight log message about warning messages encountered durung migration.
   [gbastien]
+- Fixed `Migrator.refreshDatabase` method, wfs passed to
+  `WorkflowTool._recursiveUpdateRoleMappings` need to be a dict with
+  `wf id` as `key` and `wf object` as `value`, we had `wf object` for `key`
+  and `value`.
+  [gbastien]
 
 1.14 (2019-07-19)
 -----------------

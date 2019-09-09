@@ -103,7 +103,7 @@ class Migrator(object):
             wfs = {}
             for wf_id in workflowsToUpdate:
                 wf = self.wfTool.getWorkflowById(wf_id)
-                wfs[wf] = wf
+                wfs[wf_id] = wf
             count = self.wfTool._recursiveUpdateRoleMappings(self.portal, wfs)
             logger.info('{0} object(s) updated.'.format(count))
 
