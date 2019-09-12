@@ -4,8 +4,10 @@ Changelog
 1.16 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added `Migrator.reindexIndexesFor(idxs=[], **query)` method to be able to
+  easily reindex given `idxs` (indexes) on brains returned by
+  a given catalog `query`.
+  [gbastien]
 
 1.15 (2019-09-12)
 -----------------
