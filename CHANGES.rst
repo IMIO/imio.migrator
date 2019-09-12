@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.16 (unreleased)
+1.16 (2019-09-12)
 -----------------
 
 - Added `Migrator.reindexIndexesFor(idxs=[], **query)` method to be able to
