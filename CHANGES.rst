@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.15 (unreleased)
+1.15 (2019-09-12)
 -----------------
 
 - Highlight log message about warning messages encountered durung migration.
