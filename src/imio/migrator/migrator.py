@@ -72,7 +72,8 @@ class Migrator(object):
                         catalogs=True,
                         catalogsToRebuild=['portal_catalog'],
                         workflows=False,
-                        workflowsToUpdate=[]):
+                        workflowsToUpdate=[],
+                        catalogsToUpdate=('portal_catalog', 'reference_catalog', 'uid_catalog')):
         '''After the migration script has been executed, it can be necessary to
            update the Plone catalogs and/or the workflow settings on every
            database object if workflow definitions have changed. We can pass
@@ -82,17 +83,17 @@ class Migrator(object):
             # Manage the catalogs we want to clear and rebuild
             # We have to call another method as clear=1 passed to refreshCatalog
             # does not seem to work as expected...
-            for catalog in catalogsToRebuild:
-                logger.info('Recataloging %s...' % catalog)
-                catalogObj = getattr(self.portal, catalog)
+            for catalogId in catalogsToRebuild:
+                logger.info('Clearing and rebuilding {0}...'.format(catalogId))
+                catalogObj = getattr(self.portal, catalogId)
                 if base_hasattr(catalogObj, 'clearFindAndRebuild'):
                     catalogObj.clearFindAndRebuild()
                 else:
                     # special case for the uid_catalog
                     catalogObj.manage_rebuildCatalog()
-            catalogIds = ('portal_catalog', 'reference_catalog', 'uid_catalog')
-            for catalogId in catalogIds:
+            for catalogId in catalogsToUpdate:
                 if catalogId not in catalogsToRebuild:
+                    logger.info('Refreshing {0}...'.format(catalogId))
                     catalogObj = getattr(self.portal, catalogId)
                     pghandler = ZLogHandler()
                     catalogObj.refreshCatalog(clear=0, pghandler=pghandler)

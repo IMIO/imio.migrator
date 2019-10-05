@@ -4,8 +4,12 @@ Changelog
 1.17 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Add some more logging for actions `Clear and rebuild` or `Refresh` catalog.
+  [gbastien]
+- Added parameter `catalogsToUpdate` to `refreshDatabase` so we can define what
+  catalog will be refreshed because by default, every catalogs are refreshed
+  and it is rarely necessary.
+  [gbastien]
 
 1.16 (2019-09-12)
 -----------------
