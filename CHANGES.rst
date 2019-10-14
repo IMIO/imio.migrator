@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.17 (unreleased)
+1.17 (2019-10-14)
 -----------------
 
 - Add some more logging for actions `Clear and rebuild` or `Refresh` catalog.
