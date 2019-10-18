@@ -254,8 +254,9 @@ class Migrator(object):
             if profile not in omit and self.ps.getLastVersionForProfile(profile) != 'unknown':
                 self.upgradeProfile(profile)
 
-    def runProfileSteps(self, product, steps=[], profile='default'):
+    def runProfileSteps(self, product, steps=[], profile='default', run_dependencies=True):
         """ Run given steps of a product profile (default is 'default' profile) """
         for step_id in steps:
             logger.info("Running profile step '%s:%s' => %s" % (product, profile, step_id))
-            self.ps.runImportStepFromProfile('profile-%s:%s' % (product, profile), step_id)
+            self.ps.runImportStepFromProfile('profile-%s:%s' % (product, profile), step_id,
+                                             run_dependencies=run_dependencies)

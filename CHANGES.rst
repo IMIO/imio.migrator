@@ -4,8 +4,8 @@ Changelog
 1.18 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added run_dependencies parameter in runProfileSteps method.
+  [sgeulette]
 
 1.17 (2019-10-14)
 -----------------
