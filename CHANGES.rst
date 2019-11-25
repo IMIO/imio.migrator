@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.18 (unreleased)
+1.18 (2019-11-25)
 -----------------
 
 - Added run_dependencies parameter in runProfileSteps method.
