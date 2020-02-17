@@ -4,8 +4,8 @@ Changelog
 1.19 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added logging in `Migrator.reindexIndexesFor`.
+  [gbastien]
 
 1.18 (2019-11-25)
 -----------------

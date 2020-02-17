@@ -179,7 +179,10 @@ class Migrator(object):
         """ Reindex p_idxs on objects of given p_portal_types. """
         catalog = api.portal.get_tool('portal_catalog')
         brains = catalog(**query)
-        logger.info('Reindexing indexes "{0}" on "{1}" objects...'.format(', '.join(idxs), len(brains)))
+        logger.info('Reindexing indexes "{0}" on "{1}" objects ({2})...'.format(
+            ', '.join(idxs) or '*',
+            len(brains),
+            str(query)))
         for brain in brains:
             obj = brain.getObject()
             obj.reindexObject(idxs=idxs)
