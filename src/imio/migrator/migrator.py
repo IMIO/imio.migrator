@@ -183,9 +183,16 @@ class Migrator(object):
             ', '.join(idxs) or '*',
             len(brains),
             str(query)))
+        pghandler = ZLogHandler(steps=10)
+        len_brains = len(brains)
+        pghandler.init('Reindexing indexes for %s objects' % len_brains, len_brains)
+        i = 0
         for brain in brains:
+            i += 1
+            pghandler.report(i)
             obj = brain.getObject()
             obj.reindexObject(idxs=idxs)
+        pghandler.finish()
         logger.info('Done.')
 
     def install(self, products):
