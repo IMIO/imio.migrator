@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.19 (unreleased)
+1.19 (2020-02-18)
 -----------------
 
 - Added logging in `Migrator.reindexIndexesFor`.
