@@ -4,8 +4,9 @@ Changelog
 1.20 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added `migrator.reindexIndexes` method that mimics the Catalog method
+  but let's filter `on meta_type/portal_type` and chose to `update_matadata`.
+  [gbastien]
 
 1.19 (2020-02-18)
 -----------------

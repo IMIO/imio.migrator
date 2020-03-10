@@ -175,6 +175,31 @@ class Migrator(object):
         portal_factory.manage_setPortalFactoryTypes(listOfTypeIds=registeredFactoryTypes)
         logger.info('Done.')
 
+    def reindexIndexes(self, idxs=[], update_metadata=False, meta_types=[], portal_types=[]):
+        """Reindex index including metadata if p_update_metadata=True.
+           Filter meta_type/portal_type when p_meta_types and p_portal_types are given."""
+        catalog = api.portal.get_tool('portal_catalog')
+        paths = catalog._catalog.uids.keys()
+        pghandler = ZLogHandler(steps=10)
+        i = 0
+        pghandler.init('reindexing %s' % idxs, len(paths))
+        for p in paths:
+            i += 1
+            if pghandler:
+                pghandler.report(i)
+            obj = catalog.resolve_path(p)
+            if obj is None:
+                logger.error(
+                    'reindexIndex could not resolve an object from the uid %r.' % p)
+            else:
+                if (meta_types and obj.meta_type not in meta_types) or \
+                   (portal_types and obj.portal_type not in portal_types):
+                    continue
+                catalog.catalog_object(
+                    obj, p, idxs=idxs, update_metadata=update_metadata, pghandler=pghandler)
+        if pghandler:
+            pghandler.finish()
+
     def reindexIndexesFor(self, idxs=[], **query):
         """ Reindex p_idxs on objects of given p_portal_types. """
         catalog = api.portal.get_tool('portal_catalog')
