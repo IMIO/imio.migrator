@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.20 (unreleased)
+1.20 (2020-03-12)
 -----------------
 
 - Added `migrator.reindexIndexes` method that mimics the Catalog method
