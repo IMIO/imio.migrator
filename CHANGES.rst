@@ -4,8 +4,9 @@ Changelog
 1.21 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Display always warnings at the end of the migration,
+  display `No warnings.` if there were not.
+  [gbastien]
 
 1.20 (2020-03-12)
 -----------------

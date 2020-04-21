@@ -56,10 +56,10 @@ class Migrator(object):
         if self.disable_linkintegrity_checks:
             restore_link_integrity_checks(self.original_link_integrity)
         self.request.set(CURRENTLY_MIGRATING_REQ_VALUE, False)
-        if self.warnings:
-            logger.info('HERE ARE WARNING MESSAGES GENERATED DURING THE MIGRATION : \n{0}'.format(
-                '\n'.join(self.warnings))
-            )
+        if not self.warnings:
+            self.warnings.append('No warnings.')
+        logger.info('HERE ARE WARNING MESSAGES GENERATED DURING THE MIGRATION : \n{0}'.format(
+            '\n'.join(self.warnings)))
         seconds = time.time() - self.startTime
         seconds = int(seconds)
         m, s = divmod(seconds, 60)
