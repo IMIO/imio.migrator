@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.21 (unreleased)
+1.21 (2020-04-23)
 -----------------
 
 - Display always warnings at the end of the migration,
