@@ -4,8 +4,9 @@ Changelog
 1.22 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Changed `ZLogHandler` steps from 10 to 100 in `reindexIndexesFor` and
+  `reindexIndexes` too avoid to fast log scrolling.
+  [gbastien]
 
 1.21 (2020-04-23)
 -----------------

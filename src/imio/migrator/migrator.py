@@ -180,7 +180,7 @@ class Migrator(object):
            Filter meta_type/portal_type when p_meta_types and p_portal_types are given."""
         catalog = api.portal.get_tool('portal_catalog')
         paths = catalog._catalog.uids.keys()
-        pghandler = ZLogHandler(steps=10)
+        pghandler = ZLogHandler(steps=100)
         i = 0
         pghandler.init('reindexing %s' % idxs, len(paths))
         for p in paths:
@@ -208,7 +208,7 @@ class Migrator(object):
             ', '.join(idxs) or '*',
             len(brains),
             str(query)))
-        pghandler = ZLogHandler(steps=10)
+        pghandler = ZLogHandler(steps=100)
         len_brains = len(brains)
         pghandler.init('Reindexing indexes for %s objects' % len_brains, len_brains)
         i = 0
