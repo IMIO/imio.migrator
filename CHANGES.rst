@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.22 (unreleased)
+1.22 (2020-04-29)
 -----------------
 
 - Changed `ZLogHandler` steps from 10 to 100 in `reindexIndexesFor` and
