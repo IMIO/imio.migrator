@@ -182,7 +182,10 @@ class Migrator(object):
         paths = catalog._catalog.uids.keys()
         pghandler = ZLogHandler(steps=100)
         i = 0
-        pghandler.init('reindexing %s' % idxs, len(paths))
+        pghandler.info(
+            'In reindexIndexes, idxs={0}, update_metadata={1}, meta_types={2}, portal_types={3}'.format(
+                repr(idxs), repr(update_metadata), repr(meta_types), repr(portal_types)))
+        pghandler.init('reindexIndexes', len(paths))
         for p in paths:
             i += 1
             if pghandler:
@@ -204,13 +207,14 @@ class Migrator(object):
         """ Reindex p_idxs on objects of given p_portal_types. """
         catalog = api.portal.get_tool('portal_catalog')
         brains = catalog(**query)
-        logger.info('Reindexing indexes "{0}" on "{1}" objects ({2})...'.format(
-            ', '.join(idxs) or '*',
-            len(brains),
-            str(query)))
         pghandler = ZLogHandler(steps=100)
         len_brains = len(brains)
-        pghandler.init('Reindexing indexes for %s objects' % len_brains, len_brains)
+        pghandler.info(
+            'In reindexIndexesFor, reindexing indexes "{0}" on "{1}" objects ({2})...'.format(
+                ', '.join(idxs) or '*',
+                len(brains),
+                str(query)))
+        pghandler.init('reindexIndexesFor', len_brains)
         i = 0
         for brain in brains:
             i += 1

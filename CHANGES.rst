@@ -4,8 +4,10 @@ Changelog
 1.23 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- `ZLogHandler.init` does NOT display a starting message,
+  use `ZLogHandler.info` to display initial message so we know
+  what we are doing.
+  [gbastien]
 
 1.22 (2020-04-29)
 -----------------
