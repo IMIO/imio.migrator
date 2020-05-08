@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.23 (unreleased)
+1.23 (2020-05-08)
 -----------------
 
 - `ZLogHandler.init` does NOT display a starting message,
