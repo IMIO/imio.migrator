@@ -4,7 +4,8 @@ Changelog
 1.24 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix python 3.8 synthax error.
+  [odelaere]
 
 
 1.23 (2020-05-08)
