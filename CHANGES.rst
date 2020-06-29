@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.24 (unreleased)
+1.24 (2020-06-29)
 -----------------
 
 - Fix python 3.8 synthax error.
