@@ -173,6 +173,13 @@ class Migrator(object):
         registeredFactoryTypes = [portal_type for portal_type in portal_factory.getFactoryTypes().keys()
                                   if portal_type not in portal_types]
         portal_factory.manage_setPortalFactoryTypes(listOfTypeIds=registeredFactoryTypes)
+        # remove from site_properties.types_not_searched
+        props = api.portal.get_tool('portal_properties').site_properties
+        nsTypes = list(props.getProperty('types_not_searched'))
+        for portal_type_id in portal_types:
+            if portal_type_id in nsTypes:
+                nsTypes.remove(portal_type_id)
+        props.manage_changeProperties(types_not_searched=tuple(nsTypes))
         logger.info('Done.')
 
     def reindexIndexes(self, idxs=[], update_metadata=False, meta_types=[], portal_types=[]):

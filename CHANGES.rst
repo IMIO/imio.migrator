@@ -4,8 +4,9 @@ Changelog
 1.24 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- In `Migrator.removeUnusedPortalTypes`, remove also `portal_types` from
+  `site_properties.types_not_searched`.
+  [gbastien]
 
 1.23 (2020-05-08)
 -----------------
