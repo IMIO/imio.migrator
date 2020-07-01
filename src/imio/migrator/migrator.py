@@ -2,8 +2,9 @@
 # ------------------------------------------------------------------------------
 # GNU General Public License (GPL)
 # ------------------------------------------------------------------------------
-'''This module, borrowed from Products.PloneMeeting, defines helper methods
-   to ease migration process.'''
+"""
+This module, borrowed from Products.PloneMeeting, defines helper methods to ease migration process.
+"""
 
 from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
@@ -43,7 +44,7 @@ class Migrator(object):
 
     def run(self):
         '''Must be overridden. This method does the migration job.'''
-        raise 'You should have overridden me darling.'
+        raise NotImplementedError('You should have overridden me darling.')
 
     def warn(self, logger, warning_msg):
         '''Manage warning messages, into logger and saved into self.warnings.'''
@@ -285,9 +286,9 @@ class Migrator(object):
                     product = profile.split(':')[0]
                     prod = pqi.get(product)
                     setattr(prod, 'installedversion', pqi.getProductVersion(product))
-                except IndexError, e:
+                except IndexError as e:
                     logger.error("Cannot extract product from profile '%s': %s" % (profile, e))
-                except AttributeError, e:
+                except AttributeError as e:
                     logger.error("Cannot get product '%s' from portal_quickinstaller: %s" % (product, e))
 
     def upgradeAll(self, omit=[]):

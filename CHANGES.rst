@@ -1,12 +1,19 @@
 Changelog
 =========
 
-1.24 (unreleased)
+1.25 (unreleased)
 -----------------
 
 - In `Migrator.removeUnusedPortalTypes`, remove also `portal_types` from
   `site_properties.types_not_searched`.
   [gbastien]
+
+1.24 (2020-06-29)
+-----------------
+
+- Fix python 3.8 synthax error.
+  [odelaere]
+
 
 1.23 (2020-05-08)
 -----------------
