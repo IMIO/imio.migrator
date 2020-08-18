@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.25 (unreleased)
+1.25 (2020-08-18)
 -----------------
 
 - In `Migrator.removeUnusedPortalTypes`, remove also `portal_types` from
