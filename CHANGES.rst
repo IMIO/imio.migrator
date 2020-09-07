@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.26 (unreleased)
+1.26 (2020-09-07)
 -----------------
 
 - Log every 1000 elements instead 100 in `Migrator.reindexIndexes` and
