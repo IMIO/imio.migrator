@@ -10,6 +10,7 @@ from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
 from imio.helpers.content import disable_link_integrity_checks
 from imio.helpers.content import restore_link_integrity_checks
+from imio.migrator.utils import end_time
 from plone import api
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.utils import base_hasattr
@@ -61,13 +62,7 @@ class Migrator(object):
             self.warnings.append('No warnings.')
         logger.info('HERE ARE WARNING MESSAGES GENERATED DURING THE MIGRATION : \n{0}'.format(
             '\n'.join(self.warnings)))
-        seconds = time.time() - self.startTime
-        seconds = int(seconds)
-        m, s = divmod(seconds, 60)
-        h, m = divmod(m, 60)
-        d, h = divmod(h, 24)
-        logger.info('Migration finished in {0} day(s), {1} hour(s), '
-                    '{2} minute(s), {3} second(s).'.format(d, h, m, s))
+        logger.info(end_time(self.startTime))
 
     def refreshDatabase(self,
                         catalogs=True,

@@ -1,0 +1,18 @@
+# -*- coding: utf-8 -*-
+# ------------------------------------------------------------------------------
+# GNU General Public License (GPL)
+# ------------------------------------------------------------------------------
+
+import time
+
+
+def end_time(start_time, base_msg="Migration finished in "):
+    """Display a end time message."""
+    seconds = time.time() - start_time
+    seconds = int(seconds)
+    m, s = divmod(seconds, 60)
+    h, m = divmod(m, 60)
+    d, h = divmod(h, 24)
+    msg = base_msg + "{0} day(s), {1} hour(s), " \
+        "{2} minute(s), {3} second(s).".format(d, h, m, s)
+    return msg
