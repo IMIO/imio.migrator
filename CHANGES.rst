@@ -5,7 +5,7 @@ Changelog
 -----------------
 
 - Moved end time computation and display to `utils.end_time` so it is easy to
-  reuse in other contexts.i
+  reuse in other contexts.
   Display `days/hours/minutes` only if relevant.
   [gbastien]
 
