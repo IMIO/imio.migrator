@@ -7,3 +7,5 @@ include requirements.txt
 recursive-include docs *.GPL
 recursive-include docs *.rst
 global-exclude *.pyc
+exclude .installed.cfg
+exclude .mr.developer.cfg
