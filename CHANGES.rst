@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.27 (unreleased)
+1.27 (2021-03-24)
 -----------------
 
 - Moved end time computation and display to `utils.end_time` so it is easy to
