@@ -6,8 +6,14 @@
 import time
 
 
-def end_time(start_time, base_msg="Migration finished in ", return_seconds=False):
-    """Display a end time message."""
+def end_time(start_time,
+             base_msg="Migration finished in ",
+             return_seconds=False,
+             total_number=None):
+    """Display a end time message.
+       If p_return_seconds=True, it will return the msg and the total seconds.
+       If a integer is given to total_number, the msg is compeleted with
+       number of elements processed per second."""
     seconds = time.time() - start_time
     seconds = int(seconds)
     m, s = divmod(seconds, 60)
@@ -23,6 +29,10 @@ def end_time(start_time, base_msg="Migration finished in ", return_seconds=False
         msg += "{0} minute(s), {1} second(s).".format(m, s)
     else:
         msg += "{0} second(s).".format(s)
+
+    if total_number is not None:
+        msg += " That is %d by second." % (total_number / seconds)
+
     if return_seconds:
         return msg, seconds
     return msg

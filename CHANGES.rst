@@ -4,8 +4,10 @@ Changelog
 1.28 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added parameter `total_number=None` to `utils.end_time`, when an integer
+  is given, the generated message will include info about number of elements
+  processed per second.
+  [gbastien]
 
 1.27 (2021-03-24)
 -----------------
