@@ -31,8 +31,9 @@ def end_time(start_time,
         msg += "{0} second(s).".format(s)
 
     if total_number is not None:
+        # avoid divide by 0 if seconds = 0
         msg += " Updated %d elements, that is %d by second." % (
-            total_number, total_number / seconds)
+            total_number, total_number / (seconds or 1))
 
     if return_seconds:
         return msg, seconds
