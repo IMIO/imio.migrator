@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.28 (unreleased)
+1.28 (2021-06-04)
 -----------------
 
 - Added parameter `total_number=None` to `utils.end_time`, when an integer
