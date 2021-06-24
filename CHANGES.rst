@@ -4,8 +4,8 @@ Changelog
 1.29 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Log more infos when updating workflows in `Migrator.refreshDatabase(workflows=True)`.
+  [gbastien]
 
 1.28 (2021-06-04)
 -----------------
