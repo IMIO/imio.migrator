@@ -98,13 +98,15 @@ class Migrator(object):
             if not workflowsToUpdate:
                 logger.info('Refreshing every workflows...')
                 count = self.wfTool.updateRoleMappings()
-            wfs = {}
-            for wf_id in workflowsToUpdate:
-                logger.info('Refreshing workflow "{0}"...'.format(wf_id))
-                wf = self.wfTool.getWorkflowById(wf_id)
-                wfs[wf_id] = wf
+            else:
+                wfs = {}
+                for wf_id in workflowsToUpdate:
+                    logger.info('Refreshing workflow(s) "{0}"...'.format(
+                        ", ".join(workflowsToUpdate)))
+                    wf = self.wfTool.getWorkflowById(wf_id)
+                    wfs[wf_id] = wf
                 count = self.wfTool._recursiveUpdateRoleMappings(self.portal, wfs)
-                logger.info('{0} object(s) updated.'.format(count))
+            logger.info('{0} object(s) updated.'.format(count))
 
     def cleanRegistries(self, registries=('portal_javascripts', 'portal_css', 'portal_setup')):
         '''
