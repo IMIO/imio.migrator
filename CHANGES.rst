@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.29 (unreleased)
+1.29 (2021-07-16)
 -----------------
 
 - Log more infos when updating workflows in `Migrator.refreshDatabase(workflows=True)`.
