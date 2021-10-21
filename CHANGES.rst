@@ -4,8 +4,8 @@ Changelog
 1.30 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added `runProfileSteps` docstring.
+  [sgeulette]
 
 1.29 (2021-07-16)
 -----------------
