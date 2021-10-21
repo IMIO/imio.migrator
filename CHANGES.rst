@@ -4,6 +4,9 @@ Changelog
 1.30 (unreleased)
 -----------------
 
+- Modified `runProfileSteps` method by changing default value of parameter `run_dependencies`.
+  Now it's False by default !!
+  [sgeulette] 
 - Added `runProfileSteps` docstring.
   [sgeulette]
 

@@ -300,7 +300,7 @@ class Migrator(object):
             if profile not in omit and self.ps.getLastVersionForProfile(profile) != 'unknown':
                 self.upgradeProfile(profile)
 
-    def runProfileSteps(self, product, steps=[], profile='default', run_dependencies=True):
+    def runProfileSteps(self, product, steps=[], profile='default', run_dependencies=False):
         """Run given steps of a product profile (default is 'default' profile).
 
         :param product: product name
