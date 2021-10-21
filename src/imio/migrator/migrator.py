@@ -307,7 +307,7 @@ class Migrator(object):
         :param steps: list of steps ids
         :param profile: profile name (default is 'default')
         :param run_dependencies: run first level of step dependencies (not dependencies of dependencies)
-                                 (default is True)
+                                 (default is False)
         """
         for step_id in steps:
             logger.info("Running profile step '%s:%s' => %s" % (product, profile, step_id))
