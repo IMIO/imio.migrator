@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.30 (unreleased)
+1.30 (2021-11-15)
 -----------------
 
 - Modified `runProfileSteps` method by changing default value of parameter `run_dependencies`.
