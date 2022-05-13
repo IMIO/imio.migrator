@@ -4,15 +4,16 @@ Changelog
 1.31 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added `is_in_part` function to run partially a migration with imio.updates. (See
+  FUNC_PARTS in https://github.com/IMIO/imio.updates/blob/master/README.rst)
+  [sgeulette]
 
 1.30 (2021-11-15)
 -----------------
 
 - Modified `runProfileSteps` method by changing default value of parameter `run_dependencies`.
   Now it's False by default !!
-  [sgeulette] 
+  [sgeulette]
 - Added `runProfileSteps` docstring.
   [sgeulette]
 

@@ -11,6 +11,8 @@ from imio.helpers.catalog import removeIndexes
 from imio.helpers.content import disable_link_integrity_checks
 from imio.helpers.content import restore_link_integrity_checks
 from imio.migrator.utils import end_time
+from imio.pyutils.system import memory
+from imio.pyutils.system import process_memory
 from plone import api
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.utils import base_hasattr
@@ -19,6 +21,7 @@ from Products.ZCatalog.ProgressHandler import ZLogHandler
 from zope.component import getUtility
 
 import logging
+import os
 import time
 
 
@@ -27,7 +30,7 @@ CURRENTLY_MIGRATING_REQ_VALUE = 'imio_migrator_currently_migrating'
 
 
 class Migrator(object):
-    '''Abstract class for creating a migrator.'''
+    """Abstract class for creating a migrator."""
     def __init__(self, context, disable_linkintegrity_checks=False):
         self.context = context
         self.portal = context.portal_url.getPortalObject()
@@ -42,19 +45,36 @@ class Migrator(object):
         self.disable_linkintegrity_checks = disable_linkintegrity_checks
         if disable_linkintegrity_checks:
             self.original_link_integrity = disable_link_integrity_checks()
+        self.run_part = os.getenv('FUNC_PART', '')
+        self.display_mem = True
 
     def run(self):
-        '''Must be overridden. This method does the migration job.'''
+        """Must be overridden. This method does the migration job."""
         raise NotImplementedError('You should have overridden me darling.')
 
+    def is_in_part(self, part):
+        """Check if environment variable part is the same as parameter."""
+        if self.run_part == part:
+            logger.info("DOING PART '{}'".format(part))
+            return True
+        elif self.run_part == '':
+            self.log_mem("PART {}".format(part))  # print intermediate part memory info if run in one step
+            return True
+        return False
+
+    def log_mem(self, tag=''):
+        """Display in Mb the used memory and in the fourth position of the 'quintet' the available memory"""
+        if self.display_mem:
+            logger.info('Mem used {} at {}, ({})'.format(process_memory(), tag, memory()))
+
     def warn(self, logger, warning_msg):
-        '''Manage warning messages, into logger and saved into self.warnings.'''
+        """Manage warning messages, into logger and saved into self.warnings."""
         logger.warn(warning_msg)
         self.warnings.append(warning_msg)
 
     def finish(self):
-        '''At the end of the migration, you can call this method to log its
-           duration in minutes.'''
+        """At the end of the migration, you can call this method to log its
+           duration in minutes."""
         if self.disable_linkintegrity_checks:
             restore_link_integrity_checks(self.original_link_integrity)
         self.request.set(CURRENTLY_MIGRATING_REQ_VALUE, False)
@@ -70,11 +90,11 @@ class Migrator(object):
                         workflows=False,
                         workflowsToUpdate=[],
                         catalogsToUpdate=('portal_catalog', 'reference_catalog', 'uid_catalog')):
-        '''After the migration script has been executed, it can be necessary to
+        """After the migration script has been executed, it can be necessary to
            update the Plone catalogs and/or the workflow settings on every
            database object if workflow definitions have changed. We can pass
            catalog ids we want to 'clear and rebuild' using
-           p_catalogsToRebuild.'''
+           p_catalogsToRebuild."""
         if catalogs:
             # Manage the catalogs we want to clear and rebuild
             # We have to call another method as clear=1 passed to refreshCatalog
@@ -109,9 +129,9 @@ class Migrator(object):
             logger.info('{0} object(s) updated.'.format(count))
 
     def cleanRegistries(self, registries=('portal_javascripts', 'portal_css', 'portal_setup')):
-        '''
+        """
           Clean p_registries, remove not found elements.
-        '''
+        """
         logger.info('Cleaning registries...')
         if 'portal_javascripts' in registries:
             jstool = self.portal.portal_javascripts
