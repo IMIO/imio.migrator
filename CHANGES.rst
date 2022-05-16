@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.31 (unreleased)
+1.31 (2022-05-16)
 -----------------
 
 - Added `is_in_part` function to run partially a migration with imio.updates. (See
