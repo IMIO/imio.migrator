@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-from plone.testing import z2, zca
-from plone.app.testing import PloneWithPackageLayer
 from plone.app.testing import FunctionalTesting
+from plone.app.testing import PloneWithPackageLayer
+from plone.testing import z2
+from plone.testing import zca
+
 import imio.migrator
 
 
@@ -20,4 +22,3 @@ MIGRATOR_TESTING_PROFILE = PloneWithPackageLayer(
 
 MIGRATOR_TESTING_PROFILE_FUNCTIONAL = FunctionalTesting(
     bases=(MIGRATOR_TESTING_PROFILE,), name="MIGRATOR_TESTING_PROFILE_FUNCTIONAL")
-
