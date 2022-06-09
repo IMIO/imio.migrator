@@ -4,8 +4,11 @@ Changelog
 1.32 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added `utils.ensure_upgraded` that will make sure a given `package_name` is upgraded,
+  this is useful when some content or registry records need to be present to handle some code.
+  Here the usecase is a Zope starting handler needing a registry record that may not be present
+  if package not upgraded.
+  [gbastien]
 
 1.31 (2022-05-16)
 -----------------

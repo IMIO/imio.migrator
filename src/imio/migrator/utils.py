@@ -3,6 +3,8 @@
 # GNU General Public License (GPL)
 # ------------------------------------------------------------------------------
 
+from plone import api
+
 import time
 
 
@@ -38,3 +40,13 @@ def end_time(start_time,
     if return_seconds:
         return msg, seconds
     return msg
+
+
+def ensure_upgraded(package_name):
+    """Make sure the given p_package_name is upgraded, this is useful when some
+       code will rely on fact that a record is in the registry or so.
+       profile_name must be like "collective.documentgenerator", we will turn
+       it into a portal_setup compliant profile name."""
+    from imio.migrator.migrator import Migrator
+    migrator = Migrator(api.portal.get())
+    migrator.upgradeProfile("profile-" + package_name + ":default")
