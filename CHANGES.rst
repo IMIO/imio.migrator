@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.32 (unreleased)
+1.32 (2022-07-01)
 -----------------
 
 - Added `utils.ensure_upgraded` that will make sure a given `package_name` is upgraded,
