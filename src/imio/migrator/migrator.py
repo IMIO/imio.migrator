@@ -202,6 +202,28 @@ class Migrator(object):
         props.manage_changeProperties(types_not_searched=tuple(nsTypes))
         logger.info('Done.')
 
+    def clean_orphan_brains(self, query):
+        """Get brains from catalog with p_query and clean brains without an object."""
+        brains = list(self.catalog(**query))
+        pghandler = ZLogHandler(steps=1000)
+        pghandler.init('clean_orphan_brains', len(brains))
+        pghandler.info('Cleaning orphan brains (query=%s)' % query)
+        i = 0
+        cleaned = 0
+        for brain in brains:
+            i += 1
+            pghandler.report(i)
+            path = brain.getPath()
+            try:
+                brain.getObject()
+            except AttributeError:
+                logger.warning("Uncataloging object at %s" % path)
+                self.catalog.uncatalog_object(path)
+                cleaned += 1
+        pghandler.finish()
+        logger.warning("clean_orphan_brains cleaned %d orphan brains" % cleaned)
+        logger.info('Done.')
+
     def reindexIndexes(self, idxs=[], update_metadata=False, meta_types=[], portal_types=[]):
         """Reindex index including metadata if p_update_metadata=True.
            Filter meta_type/portal_type when p_meta_types and p_portal_types are given."""

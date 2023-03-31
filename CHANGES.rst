@@ -4,8 +4,8 @@ Changelog
 1.33 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added `Migrator.clean_orphan_brains` that will uncatalog orphan brains.
+  [gbastien]
 
 1.32 (2022-07-01)
 -----------------
