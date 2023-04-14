@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.33 (unreleased)
+1.33 (2023-04-14)
 -----------------
 
 - Added `Migrator.clean_orphan_brains` that will uncatalog orphan brains.
