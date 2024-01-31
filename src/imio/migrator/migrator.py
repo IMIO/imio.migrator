@@ -159,12 +159,16 @@ class Migrator(object):
 
         if 'portal_setup' in registries:
             # clean portal_setup
+            change = False
             for stepId in self.ps.getSortedImportSteps():
                 stepMetadata = self.ps.getImportStepMetadata(stepId)
                 # remove invalid steps
                 if stepMetadata['invalid']:
                     logger.info('Removing %s step from portal_setup' % stepId)
                     self.ps._import_registry.unregisterStep(stepId)
+                    change = True
+            if change:
+                self.ps._p_changed = True
             logger.info('portal_setup has been cleaned!')
         logger.info('Registries have been cleaned!')
 

@@ -4,8 +4,8 @@ Changelog
 1.34 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Corrected `Migrator.cleanRegistries` to really save portal_setup changes.
+  [sgeulette]
 
 1.33 (2023-04-14)
 -----------------
