@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.34 (unreleased)
+1.34 (2024-02-08)
 -----------------
 
 - Corrected `Migrator.cleanRegistries` to really save portal_setup changes.
