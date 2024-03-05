@@ -4,8 +4,8 @@ Changelog
 1.35 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Added optional batching on `Migrator.reindexIndexes`.
+  [sgeulette]
 
 1.34 (2024-02-08)
 -----------------
