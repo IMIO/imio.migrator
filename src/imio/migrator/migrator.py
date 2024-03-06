@@ -253,8 +253,11 @@ class Migrator(object):
             'In reindexIndexes, idxs={0}, update_metadata={1}, meta_types={2}, portal_types={3}'.format(
                 repr(idxs), repr(update_metadata), repr(meta_types), repr(portal_types)))
         pghandler.init('reindexIndexes', len(paths))
+        # use in the future batch_hashed_filename('imio.migrator.reindexIndexes.pkl',
+        #                                         (idxs, update_metadata, meta_types, portal_types))
         pklfile = hashed_filename('imio.migrator.reindexIndexes.pkl',
                                   '_'.join(map(repr, (idxs, update_metadata, meta_types, portal_types))))
+        pklfile = os.path.join(os.getenv('INSTANCE_HOME', '.'), pklfile)
         batch_keys, batch_config = batch_get_keys(pklfile, self.batch_value, self.batch_last, self.commit_value,
                                                   loop_length=len(paths))
         for p in paths:
