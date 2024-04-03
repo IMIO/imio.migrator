@@ -5,7 +5,7 @@
 """
 This module, borrowed from Products.PloneMeeting, defines helper methods to ease migration process.
 """
-from imio.helpers.batching import batch_delete_keys_file
+from imio.helpers.batching import batch_delete_files
 from imio.helpers.batching import batch_get_keys
 from imio.helpers.batching import batch_handle_key
 from imio.helpers.batching import batch_loop_else
@@ -52,9 +52,6 @@ class Migrator(object):
             self.original_link_integrity = disable_link_integrity_checks()
         self.run_part = os.getenv('FUNC_PART', '')
         self.display_mem = True
-        self.batch_value = int(os.getenv('BATCH', '0'))
-        self.batch_last = bool(int(os.getenv('BATCH_LAST', '0')))
-        self.commit_value = int(os.getenv('COMMIT', '0'))
 
     def run(self):
         """Must be overridden. This method does the migration job."""
@@ -243,7 +240,7 @@ class Migrator(object):
         :param update_metadata: also reindex metadata
         :param meta_types: list of meta_types to filter on
         :param portal_types: list of portal_types to filter on
-        :return: True if self.batch_value is not defined, else return batch_last
+        :return: True if batch_number is not defined, else return batch_last
         """
         catalog = api.portal.get_tool('portal_catalog')
         paths = catalog._catalog.uids.keys()
@@ -258,8 +255,7 @@ class Migrator(object):
         pklfile = hashed_filename('imio.migrator.reindexIndexes.pkl',
                                   '_'.join(map(repr, (idxs, update_metadata, meta_types, portal_types))))
         pklfile = os.path.join(os.getenv('INSTANCE_HOME', '.'), pklfile)
-        batch_keys, batch_config = batch_get_keys(pklfile, self.batch_value, self.batch_last, self.commit_value,
-                                                  loop_length=len(paths))
+        batch_keys, batch_config = batch_get_keys(pklfile, loop_length=len(paths))
         for p in paths:
             if batch_skip_key(p, batch_keys, batch_config):
                 continue
@@ -276,11 +272,11 @@ class Migrator(object):
                 break
         else:
             batch_loop_else(p, batch_keys, batch_config)
-        if self.batch_last:
-            batch_delete_keys_file(batch_keys, batch_config)
+        if batch_config['bl']:
+            batch_delete_files(batch_keys, batch_config)
         if pghandler:
             pghandler.finish()
-        return not self.batch_value and True or self.batch_last
+        return not batch_config['bn'] and True or batch_config['bl']
 
     def reindexIndexesFor(self, idxs=[], **query):
         """ Reindex p_idxs on objects of given p_portal_types. """
