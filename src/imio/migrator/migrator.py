@@ -8,6 +8,7 @@ This module, borrowed from Products.PloneMeeting, defines helper methods to ease
 from imio.helpers.batching import batch_delete_files
 from imio.helpers.batching import batch_get_keys
 from imio.helpers.batching import batch_handle_key
+from imio.helpers.batching import batch_hashed_filename
 from imio.helpers.batching import batch_loop_else
 from imio.helpers.batching import batch_skip_key
 from imio.helpers.catalog import removeColumns
@@ -250,11 +251,8 @@ class Migrator(object):
             'In reindexIndexes, idxs={0}, update_metadata={1}, meta_types={2}, portal_types={3}'.format(
                 repr(idxs), repr(update_metadata), repr(meta_types), repr(portal_types)))
         pghandler.init('reindexIndexes', len(paths))
-        # use in the future batch_hashed_filename('imio.migrator.reindexIndexes.pkl',
-        #                                         (idxs, update_metadata, meta_types, portal_types))
-        pklfile = hashed_filename('imio.migrator.reindexIndexes.pkl',
-                                  '_'.join(map(repr, (idxs, update_metadata, meta_types, portal_types))))
-        pklfile = os.path.join(os.getenv('INSTANCE_HOME', '.'), pklfile)
+        pklfile = batch_hashed_filename('imio.migrator.reindexIndexes.pkl',
+                                        (idxs, update_metadata, meta_types, portal_types))
         batch_keys, batch_config = batch_get_keys(pklfile, loop_length=len(paths))
         for p in paths:
             if batch_skip_key(p, batch_keys, batch_config):
