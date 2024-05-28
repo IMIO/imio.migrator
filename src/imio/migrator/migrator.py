@@ -16,7 +16,6 @@ from imio.helpers.catalog import removeIndexes
 from imio.helpers.content import disable_link_integrity_checks
 from imio.helpers.content import restore_link_integrity_checks
 from imio.migrator.utils import end_time
-from imio.pyutils.system import hashed_filename
 from imio.pyutils.system import memory
 from imio.pyutils.system import process_memory
 from plone import api
