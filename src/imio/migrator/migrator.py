@@ -194,7 +194,7 @@ class Migrator(object):
             types.manage_delObjects(ids=to_remove)
         # remove from portal_factory
         portal_factory = api.portal.get_tool('portal_factory')
-        registeredFactoryTypes = [portal_type for portal_type in portal_factory.getFactoryTypes().keys()
+        registeredFactoryTypes = [portal_type for portal_type in list(portal_factory.getFactoryTypes().keys())
                                   if portal_type not in portal_types]
         portal_factory.manage_setPortalFactoryTypes(listOfTypeIds=registeredFactoryTypes)
         # remove from site_properties.types_not_searched
@@ -232,7 +232,7 @@ class Migrator(object):
         """Reindex index including metadata if p_update_metadata=True.
            Filter meta_type/portal_type when p_meta_types and p_portal_types are given."""
         catalog = api.portal.get_tool('portal_catalog')
-        paths = catalog._catalog.uids.keys()
+        paths = list(catalog._catalog.uids.keys())
         pghandler = ZLogHandler(steps=1000)
         i = 0
         pghandler.info(

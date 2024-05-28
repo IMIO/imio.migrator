@@ -4,8 +4,8 @@ Changelog
 1.35 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Fix dict iteration for Python 3.
+  [laulaz]
 
 1.34 (2024-02-08)
 -----------------
