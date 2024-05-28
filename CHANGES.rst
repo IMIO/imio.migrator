@@ -4,6 +4,8 @@ Changelog
 1.35 (unreleased)
 -----------------
 
+- Fix dict iteration for Python 3.
+  [laulaz]
 - Added optional batching on `Migrator.reindexIndexes`.
   [sgeulette]
 
