@@ -6,6 +6,8 @@ Changelog
 
 - Fix dict iteration for Python 3.
   [laulaz]
+- Added optional batching on `Migrator.reindexIndexes`.
+  [sgeulette]
 
 1.34 (2024-02-08)
 -----------------

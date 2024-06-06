@@ -5,7 +5,12 @@
 """
 This module, borrowed from Products.PloneMeeting, defines helper methods to ease migration process.
 """
-
+from imio.helpers.batching import batch_delete_files
+from imio.helpers.batching import batch_get_keys
+from imio.helpers.batching import batch_handle_key
+from imio.helpers.batching import batch_hashed_filename
+from imio.helpers.batching import batch_loop_else
+from imio.helpers.batching import batch_skip_key
 from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
 from imio.helpers.content import disable_link_integrity_checks
@@ -230,7 +235,13 @@ class Migrator(object):
 
     def reindexIndexes(self, idxs=[], update_metadata=False, meta_types=[], portal_types=[]):
         """Reindex index including metadata if p_update_metadata=True.
-           Filter meta_type/portal_type when p_meta_types and p_portal_types are given."""
+
+        :param idxs: list of indexes to handle
+        :param update_metadata: also reindex metadata
+        :param meta_types: list of meta_types to filter on
+        :param portal_types: list of portal_types to filter on
+        :return: True if batch_number is not defined, else return batch_last
+        """
         catalog = api.portal.get_tool('portal_catalog')
         paths = list(catalog._catalog.uids.keys())
         pghandler = ZLogHandler(steps=1000)
@@ -239,22 +250,30 @@ class Migrator(object):
             'In reindexIndexes, idxs={0}, update_metadata={1}, meta_types={2}, portal_types={3}'.format(
                 repr(idxs), repr(update_metadata), repr(meta_types), repr(portal_types)))
         pghandler.init('reindexIndexes', len(paths))
+        pklfile = batch_hashed_filename('imio.migrator.reindexIndexes.pkl',
+                                        (idxs, update_metadata, meta_types, portal_types))
+        batch_keys, batch_config = batch_get_keys(pklfile, loop_length=len(paths))
         for p in paths:
+            if batch_skip_key(p, batch_keys, batch_config):
+                continue
             i += 1
             if pghandler:
                 pghandler.report(i)
             obj = catalog.resolve_path(p)
             if obj is None:
-                logger.error(
-                    'reindexIndex could not resolve an object from the uid %r.' % p)
-            else:
-                if (meta_types and obj.meta_type not in meta_types) or \
-                   (portal_types and obj.portal_type not in portal_types):
-                    continue
-                catalog.catalog_object(
-                    obj, p, idxs=idxs, update_metadata=update_metadata, pghandler=pghandler)
+                logger.error('reindexIndex could not resolve an object from the uid %r.' % p)
+            elif (not meta_types or obj.meta_type in meta_types) and \
+                 (not portal_types or obj.portal_type in portal_types):
+                catalog.catalog_object(obj, p, idxs=idxs, update_metadata=update_metadata, pghandler=pghandler)
+            if batch_handle_key(p, batch_keys, batch_config):
+                break
+        else:
+            batch_loop_else(p, batch_keys, batch_config)
+        if batch_config['bl']:
+            batch_delete_files(batch_keys, batch_config)
         if pghandler:
             pghandler.finish()
+        return not batch_config['bn'] and True or batch_config['bl']
 
     def reindexIndexesFor(self, idxs=[], **query):
         """ Reindex p_idxs on objects of given p_portal_types. """
