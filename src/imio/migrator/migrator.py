@@ -11,6 +11,7 @@ from imio.helpers.batching import batch_handle_key
 from imio.helpers.batching import batch_hashed_filename
 from imio.helpers.batching import batch_loop_else
 from imio.helpers.batching import batch_skip_key
+from imio.helpers.batching import can_delete_batch_files
 from imio.helpers.catalog import removeColumns
 from imio.helpers.catalog import removeIndexes
 from imio.helpers.content import disable_link_integrity_checks
@@ -268,8 +269,8 @@ class Migrator(object):
             if batch_handle_key(p, batch_keys, batch_config):
                 break
         else:
-            batch_loop_else(p, batch_keys, batch_config)
-        if batch_config['bl']:
+            batch_loop_else(batch_keys, batch_config)
+        if can_delete_batch_files(batch_keys, batch_config):
             batch_delete_files(batch_keys, batch_config)
         if pghandler:
             pghandler.finish()
