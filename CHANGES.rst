@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.35 (unreleased)
+1.35 (2024-09-17)
 -----------------
 
 - Fix dict iteration for Python 3.
