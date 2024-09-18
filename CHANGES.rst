@@ -4,8 +4,8 @@ Changelog
 1.36 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Don't create wheel.
+  [sgeulette]
 
 1.35 (2024-09-17)
 -----------------
