@@ -38,8 +38,8 @@ setup(
     zip_safe=False,
     install_requires=[
         'Plone',
-        'imio.helpers>=1.0.0',
-        'imio.pyutils>=0.20',
+        'imio.helpers>=1.0.1',
+        'imio.pyutils>=1.1.1',
         'setuptools',
     ],
     extras_require={
