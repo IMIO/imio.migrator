@@ -1,11 +1,11 @@
 Changelog
 =========
 
-1.37 (unreleased)
+1.37 (2024-09-19)
 -----------------
 
-- Nothing changed yet.
-
+- Released again with zest.releaser 6.22.2.
+  [sgeulette]
 
 1.36 (2024-09-18)
 -----------------
