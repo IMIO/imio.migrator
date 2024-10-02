@@ -4,8 +4,8 @@ Changelog
 1.38 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Corrected batching finished return.
+  [sgeulette]
 
 1.37 (2024-09-19)
 -----------------

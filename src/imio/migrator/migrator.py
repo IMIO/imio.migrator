@@ -7,6 +7,7 @@ This module, borrowed from Products.PloneMeeting, defines helper methods to ease
 """
 from imio.helpers.batching import batch_delete_files
 from imio.helpers.batching import batch_get_keys
+from imio.helpers.batching import batch_globally_finished
 from imio.helpers.batching import batch_handle_key
 from imio.helpers.batching import batch_hashed_filename
 from imio.helpers.batching import batch_loop_else
@@ -274,7 +275,7 @@ class Migrator(object):
             batch_delete_files(batch_keys, batch_config)
         if pghandler:
             pghandler.finish()
-        return not batch_config['bn'] and True or batch_config['bl']
+        return batch_globally_finished(batch_keys, batch_config)
 
     def reindexIndexesFor(self, idxs=[], **query):
         """ Reindex p_idxs on objects of given p_portal_types. """
