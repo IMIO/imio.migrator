@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.38 (unreleased)
+1.38 (2024-10-02)
 -----------------
 
 - Corrected batching finished return.
