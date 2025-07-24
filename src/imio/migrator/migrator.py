@@ -320,9 +320,7 @@ class Migrator(object):
         """Allows to install a series of products"""
         for product in products:
             logger.info("Install product '{}'".format(product))
-            logger.info(
-                self.installer.install_product(product)
-            )  # don't reinstall
+            logger.info(self.installer.install_product(product))  # don't reinstall
 
     def reinstall(self, profiles, ignore_dependencies=False, dependency_strategy=None):
         """Allows to reinstall a series of p_profiles."""
