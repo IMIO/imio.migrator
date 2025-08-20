@@ -3,4 +3,30 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="imio.migrator">
 
+  <include file="configure.zcml" />
+
+  <genericsetup:registerProfile
+      name="testing"
+      title="imio.migrator test profile"
+      directory="profiles/testing"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:registerProfile
+      name="testing2"
+      title="imio.migrator test profile 2"
+      directory="profiles/testing2"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:upgradeSteps
+      source="999"
+      destination="1000"
+      profile="imio.migrator:testing">
+    <genericsetup:upgradeDepends
+      title="Migration step"
+      import_profile="imio.migrator:testing"
+      />
+  </genericsetup:upgradeSteps>
+
 </configure>

@@ -1,11 +1,11 @@
 Changelog
 =========
 
-1.39 (unreleased)
------------------
+2.0 (unreleased)
+----------------
 
-- Nothing changed yet.
-
+- Add Plone 6.1 compatibility, drop Plone 4 / 5 compatibility
+  [laulaz]
 
 1.38 (2024-10-02)
 -----------------

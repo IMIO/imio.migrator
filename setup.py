@@ -5,13 +5,12 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-long_description = (
-    open('README.rst').read() + '\n' + open('CHANGES.rst').read() + '\n')
+long_description = open("README.rst").read() + "\n" + open("CHANGES.rst").read() + "\n"
 
 
 setup(
-    name='imio.migrator',
-    version='1.39.dev0',
+    name="imio.migrator",
+    version="2.0.dev0",
     description="Migration helper tool",
     long_description=long_description,
     # Get more from http://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -19,32 +18,35 @@ setup(
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Plone",
-        "Framework :: Plone :: 4.3",
+        "Framework :: Plone :: 6.1",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.13",
     ],
-    keywords='migration helpers',
-    author='IMIO',
-    author_email='dev@imio.be',
-    url='https://github.com/imio/imio.migrator',
-    download_url='https://pypi.org/project/imio.migrator',
-    license='GPL',
-    packages=find_packages('src', exclude=['ez_setup']),
-    namespace_packages=['imio', ],
-    package_dir={'': 'src'},
+    keywords="migration helpers",
+    author="IMIO",
+    author_email="dev@imio.be",
+    url="https://github.com/imio/imio.migrator",
+    download_url="https://pypi.org/project/imio.migrator",
+    license="GPL",
+    packages=find_packages("src", exclude=["ez_setup"]),
+    namespace_packages=[
+        "imio",
+    ],
+    package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Plone',
-        'imio.helpers>=1.0.1',
-        'imio.pyutils>=1.1.1',
-        'setuptools',
+        "Plone",
+        "imio.helpers>=1.0.1",
+        "imio.pyutils>=1.1.1",
+        "setuptools",
     ],
     extras_require={
-        'test': [
-            'plone.app.testing',
+        "test": [
+            "plone.app.testing",
+            "freezegun",
         ],
     },
     entry_points="""
