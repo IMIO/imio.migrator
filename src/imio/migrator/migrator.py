@@ -254,7 +254,7 @@ class Migrator(object):
         pghandler.init('reindexIndexes', len(paths))
         pklfile = batch_hashed_filename('imio.migrator.reindexIndexes.pkl',
                                         (idxs, update_metadata, meta_types, portal_types))
-        batch_keys, batch_config = batch_get_keys(pklfile, loop_length=len(paths))
+        batch_keys, batch_config = batch_get_keys(pklfile, loop_length=len(paths), log=True)
         for p in paths:
             if batch_skip_key(p, batch_keys, batch_config):
                 continue
@@ -271,10 +271,11 @@ class Migrator(object):
                 break
         else:
             batch_loop_else(batch_keys, batch_config)
-        if can_delete_batch_files(batch_keys, batch_config):
-            batch_delete_files(batch_keys, batch_config)
         if pghandler:
             pghandler.finish()
+        if can_delete_batch_files(batch_keys, batch_config):
+            batch_delete_files(batch_keys, batch_config, log=True)
+            return True
         return batch_globally_finished(batch_keys, batch_config)
 
     def reindexIndexesFor(self, idxs=[], **query):
@@ -307,8 +308,8 @@ class Migrator(object):
 
     def reinstall(self, profiles, ignore_dependencies=False, dependency_strategy=None):
         """ Allows to reinstall a series of p_profiles. """
-        logger.info('Reinstalling product(s) %s...' % ', '.join([profile.startswith('profile-') and profile[8:] or
-                                                                 profile for profile in profiles]))
+        logger.info('Reinstalling product(s) %s...' % ', '.join([profile.startswith('profile-') and profile[8:]
+                                                                 or profile for profile in profiles]))
         for profile in profiles:
             if not profile.startswith('profile-'):
                 profile = 'profile-%s' % profile

@@ -4,8 +4,8 @@ Changelog
 1.39 (unreleased)
 -----------------
 
-- Nothing changed yet.
-
+- Corrected batching finished return in reindexIndexes.
+  [sgeulette]
 
 1.38 (2024-10-02)
 -----------------
