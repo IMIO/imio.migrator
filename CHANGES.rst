@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.39 (unreleased)
------------------
+1.40.0 (2026-01-15)
+-------------------
 
 - Corrected batching finished return in reindexIndexes.
   [sgeulette]
