@@ -6,6 +6,8 @@ Changelog
 
 - Add Plone 6.1 compatibility, drop Plone 4 / 5 compatibility
   [laulaz]
+- Add Plone 6.2 compatibility.
+  [chris-adam]
 
 1.40.0 (2026-01-15)
 -------------------

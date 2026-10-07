@@ -19,6 +19,7 @@ setup(
         "Environment :: Web Environment",
         "Framework :: Plone",
         "Framework :: Plone :: 6.1",
+        "Framework :: Plone :: 6.2",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
@@ -31,16 +32,14 @@ setup(
     download_url="https://pypi.org/project/imio.migrator",
     license="GPL",
     packages=find_packages("src", exclude=["ez_setup"]),
-    namespace_packages=[
-        "imio",
-    ],
+    python_requires=">=3.10",
     package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
     install_requires=[
         "Plone",
-        "imio.helpers>=1.0.1",
-        "imio.pyutils>=1.1.1",
+        "imio.helpers>=1.3.8",
+        "imio.pyutils>=1.2.0",
         "setuptools",
     ],
     extras_require={

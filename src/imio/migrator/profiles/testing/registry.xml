@@ -2,7 +2,7 @@
 <registry>
 
   <records prefix="plone.bundles/broken-css-bundle"
-           interface="Products.CMFPlone.interfaces.IBundleRegistry">
+           interface="plone.base.interfaces.IBundleRegistry">
     <value key="enabled">True</value>
     <value key="expression"></value>
     <value key="csscompilation">++plone++not-existing.css</value>
@@ -13,7 +13,7 @@
   </records>
 
   <records prefix="plone.bundles/broken-js-bundle"
-           interface="Products.CMFPlone.interfaces.IBundleRegistry">
+           interface="plone.base.interfaces.IBundleRegistry">
     <value key="enabled">True</value>
     <value key="expression"></value>
     <value key="csscompilation"></value>

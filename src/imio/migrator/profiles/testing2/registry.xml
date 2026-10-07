@@ -2,7 +2,7 @@
 <registry>
 
   <records prefix="plone.bundles/my-bundle"
-           interface="Products.CMFPlone.interfaces.IBundleRegistry">
+           interface="plone.base.interfaces.IBundleRegistry">
     <value key="enabled">True</value>
     <value key="expression"></value>
     <value key="csscompilation">++plone++my-bundle.css</value>
