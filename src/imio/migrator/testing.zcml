@@ -29,4 +29,13 @@
       />
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeDepends
+      title="Single migration step"
+      source="999"
+      destination="1000"
+      profile="imio.migrator:testing2"
+      import_profile="imio.migrator:testing2"
+      import_steps="plone.app.registry"
+      />
+
 </configure>
