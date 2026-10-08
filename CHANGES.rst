@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.0 (unreleased)
-----------------
+2.0.0 (unreleased)
+------------------
 
 - Add Plone 6.1 compatibility, drop Plone 4 / 5 compatibility
   [laulaz]
