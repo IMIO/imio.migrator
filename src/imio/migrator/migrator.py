@@ -263,7 +263,9 @@ class Migrator(object):
             "imio.migrator.reindexIndexes.pkl",
             (idxs, update_metadata, meta_types, portal_types),
         )
-        batch_keys, batch_config = batch_get_keys(pklfile, loop_length=len(paths), log=True)
+        batch_keys, batch_config = batch_get_keys(
+            pklfile, loop_length=len(paths), log=True
+        )
         for p in paths:
             if batch_skip_key(p, batch_keys, batch_config):
                 continue
