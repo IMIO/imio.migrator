@@ -3,6 +3,10 @@
 *.pyc
 .installed.cfg
 .mr.developer.cfg
+.plone-version
+.python-version
+CACHEDIR.TAG
+.plone.versioncheck.tracked.json
 .project
 .pydevproject
 .settings/
@@ -17,3 +21,5 @@ src/*
 !src/imio
 var/
 .coverage
+pyvenv.cfg
+.idea
