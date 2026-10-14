@@ -1,24 +1,37 @@
 # -*- coding: utf-8 -*-
-from plone.app.testing import FunctionalTesting
-from plone.app.testing import PloneWithPackageLayer
-from plone.testing import z2
-from plone.testing import zca
+
+from plone.app.testing import applyProfile
+from plone.app.testing import IntegrationTesting
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import PloneSandboxLayer
 
 import imio.migrator
+import unittest
 
 
-MIGRATOR_ZCML = zca.ZCMLSandbox(filename="testing.zcml",
-                                package=imio.migrator,
-                                name='MIGRATOR_ZCML')
+class ImioMigratorLayer(PloneSandboxLayer):
 
-MIGRATOR_Z2 = z2.IntegrationTesting(bases=(z2.STARTUP, MIGRATOR_ZCML),
-                                    name='MIGRATOR_Z2')
+    defaultBases = (PLONE_FIXTURE,)
 
-MIGRATOR_TESTING_PROFILE = PloneWithPackageLayer(
-    zcml_filename="testing.zcml",
-    zcml_package=imio.migrator,
-    additional_z2_products=(),
-    name="MIGRATOR_TESTING_PROFILE")
+    def setUpZope(self, app, configurationContext):
+        """Set up Zope."""
+        self.loadZCML(package=imio.migrator, name="testing.zcml")
 
-MIGRATOR_TESTING_PROFILE_FUNCTIONAL = FunctionalTesting(
-    bases=(MIGRATOR_TESTING_PROFILE,), name="MIGRATOR_TESTING_PROFILE_FUNCTIONAL")
+    def setUpPloneSite(self, portal):
+        """Set up Plone."""
+        portal.portal_workflow.setDefaultChain("simple_publication_workflow")
+        applyProfile(portal, "imio.migrator:testing")
+
+
+FIXTURE = ImioMigratorLayer(name="FIXTURE")
+INTEGRATION = IntegrationTesting(bases=(FIXTURE,), name="INTEGRATION")
+
+
+class IntegrationTestCase(unittest.TestCase):
+    """Base class for integration tests."""
+
+    layer = INTEGRATION
+
+    def setUp(self):
+        super(IntegrationTestCase, self).setUp()
+        self.portal = self.layer["portal"]
