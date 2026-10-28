@@ -10,6 +10,8 @@ Changelog
   [laulaz]
 - Add Plone 6.2 compatibility.
   [chris-adam]
+- `upgradeAll` no longer keeps the request `profile_id` in its default `omit` list nor in the caller's list.
+  [chris-adam]
 
 1.40.0 (2026-01-15)
 -------------------

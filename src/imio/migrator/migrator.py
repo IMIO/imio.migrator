@@ -387,8 +387,9 @@ class Migrator(object):
             if highest_version > current_version:
                 self.ps.setLastVersionForProfile(profile, dest)
 
-    def upgradeAll(self, omit=[]):
+    def upgradeAll(self, omit=None):
         """Upgrade all upgrade profiles except those in omit parameter list"""
+        omit = list(omit or [])
         if self.portal.REQUEST.get("profile_id"):
             omit.append(self.portal.REQUEST.get("profile_id"))
         for profile in self.ps.listProfilesWithUpgrades():

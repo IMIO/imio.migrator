@@ -410,8 +410,17 @@ class TestMigrator(IntegrationTestCase):
         ps = self.migrator.ps
         ps.setLastVersionForProfile("imio.migrator:testing", "999")
         self.portal.REQUEST.set("profile_id", "imio.migrator:testing")
-        self.migrator.upgradeAll(omit=[])
+        omit = []
+        self.migrator.upgradeAll(omit=omit)
         self.assertEqual(ps.getLastVersionForProfile("imio.migrator:testing"), ("999",))
+        # neither the given list nor the default one keeps the request profile_id
+        self.assertEqual(omit, [])
+        self.migrator.upgradeAll()
+        self.portal.REQUEST.set("profile_id", None)
+        self.migrator.upgradeAll()
+        self.assertEqual(
+            ps.getLastVersionForProfile("imio.migrator:testing"), ("1000",)
+        )
         # a profile that is not installed is not upgraded
         self.assertEqual(
             ps.getLastVersionForProfile("imio.migrator:testing2"), "unknown"
